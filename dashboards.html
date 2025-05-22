@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power BI Suite | Sicoob Visão Estratégica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #003641;
+            --secondary-color: #00AE9D;
+            --accent-color: #C9D200;
+            --text-color-body: #212529;
+            --text-color-muted: #6c757d;
+            --text-color-on-primary: #ffffff;
+            --bg-color: #f4f7f9;
+            --sidebar-bg: #ffffff;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+            --border-radius: 6px;
+            --box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-color-light: #dee2e6;
+            --bg-color-light: #f8f9fa;
+            --bg-color-hover-light: #e9ecef;
+            --nav-link-active-bg: var(--secondary-color);
+            --nav-link-active-text: #ffffff;
+            --nav-link-active-border: #00877A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+
+        body {
+            background: var(--bg-color); color: var(--text-color-body);
+            line-height: 1.6; height: 100vh; overflow: hidden;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+        }
+
+        .dashboard-wrapper { display: flex; height: 100vh; }
+
+        /* --- Sidebar --- */
+        .sidebar-nav {
+            width: var(--sidebar-width); background-color: var(--sidebar-bg);
+            padding: 0; overflow-y: hidden;
+            transition: transform var(--transition), width var(--transition);
+            border-right: 1px solid var(--border-color-light);
+            height: 100%; flex-shrink: 0; display: flex; flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.03);
+        }
+        .sidebar-nav-header {
+            padding: 0;
+            border-bottom: 1px solid var(--border-color-light); flex-shrink: 0;
+        }
+        .sidebar-logo-container {
+            background-color: var(--primary-color);
+            padding: 1rem 1.25rem;
+            min-height: 60px; /* Garante altura mínima */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sidebar-logo {
+            max-width: 150px;
+            height: auto;
+            display: block; /* Alterado para block */
+        }
+        /* Estilo para o texto alt caso a imagem não carregue */
+        .sidebar-logo[alt]:after {
+            content: attr(alt);
+            display: block;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            font-style: italic;
+            text-align: center;
+        }
+        .sidebar-header-content {
+            padding: 1rem 1.25rem;
+        }
+        .sidebar-title {
+            font-size: 1.1rem;
+            color: var(--primary-color); font-weight: 600;
+            margin-bottom: 0.85rem;
+        }
+        .search-reports {
+            width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--border-color-light);
+            border-radius: var(--border-radius); font-size: 0.9rem;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .search-reports:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 174, 157, 0.25);
+            outline: none;
+        }
+        .sidebar-content {
+            padding: 0.75rem 1.25rem; overflow-y: auto; flex-grow: 1;
+        }
+        .sidebar-content::-webkit-scrollbar { width: 6px; }
+        .sidebar-content::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-content::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+        .sidebar-content::-webkit-scrollbar-thumb:hover { background: #bbb; }
+
+        .nav-group { margin-bottom: 0.5rem; }
+        .nav-group summary {
+            display: flex; align-items: center; gap: 0.85rem;
+            padding: 0.8rem 0.6rem; border-radius: var(--border-radius);
+            cursor: pointer; list-style: none; transition: background-color var(--transition);
+            user-select: none;
+        }
+        .nav-group summary:hover { background-color: var(--bg-color-light); }
+        .nav-group summary::-webkit-details-marker { display: none; }
+        .nav-group summary::after {
+            content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            margin-left: auto; transition: transform var(--transition); font-size: 0.75em;
+            color: var(--text-color-muted);
+        }
+        .nav-group[open] summary::after { transform: rotate(180deg); }
+        .nav-icon {
+            width: 30px; height: 30px; background: var(--bg-color-light);
+            border-radius: var(--border-radius); display: flex; align-items: center;
+            justify-content: center; color: var(--secondary-color);
+            flex-shrink: 0; font-size: 0.85rem; border: 1px solid var(--border-color-light);
+        }
+        .nav-group[open] .nav-icon { background: var(--secondary-color); color: white; border-color: var(--secondary-color);}
+
+        .nav-title { font-weight: 600; color: var(--primary-color); font-size: 0.95rem; }
+        .nav-links { display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; margin-top: 0.5rem; border-left: 2px solid var(--border-color-light); margin-left: 15px; }
+        .nav-link {
+            padding: 0.65rem 1rem; border-radius: var(--border-radius); display: flex;
+            align-items: center; gap: 0.75rem; text-decoration: none;
+            color: var(--text-color-muted); transition: all 0.2s ease-in-out; font-size: 0.875rem;
+            border-left: 3px solid transparent;
+        }
+        .nav-link:hover { background: var(--bg-color-hover-light); color: var(--primary-color); transform: translateX(2px); }
+        .nav-link.active {
+            background-color: var(--bg-color-light);
+            color: var(--nav-link-active-bg) !important;
+            font-weight: 600;
+            border-left-color: var(--nav-link-active-border);
+        }
+        .nav-link.active i { color: var(--nav-link-active-bg); }
+        .nav-link i { color: var(--text-color-muted); width: 18px; text-align: center; transition: color 0.2s ease; font-size: 0.9em; }
+        .no-results { padding: 1rem; text-align: center; color: var(--text-color-muted); font-style: italic; }
+        .hidden { display: none !important; }
+
+        /* --- Main Content --- */
+        .main-content { flex-grow: 1; display: flex; flex-direction: column; height: 100vh; overflow-y: hidden; }
+        .main-header-bar {
+            display: flex; align-items: center; padding: 0 1.5rem;
+            height: var(--header-height);
+            background-color: var(--primary-color); 
+            color: var(--text-color-on-primary); 
+            border-bottom: 1px solid #002a33; 
+            flex-shrink: 0;
+        }
+        .sidebar-toggle, .fullscreen-toggle {
+            background: transparent; border: none; font-size: 1.4rem;
+            color: var(--text-color-on-primary); 
+            cursor: pointer; margin-right: 1rem;
+            padding: 0.5rem; border-radius: var(--border-radius);
+            transition: background-color var(--transition), color var(--transition);
+        }
+        .sidebar-toggle:hover, .fullscreen-toggle:hover {
+            background-color: rgba(255,255,255,0.1); 
+        }
+        .fullscreen-toggle { margin-left: auto; margin-right: 0; font-size: 1.15rem; }
+        .main-header-content { flex-grow: 1; }
+        .main-header-content h1 {
+            font-size: 1.4rem;
+            color: var(--text-color-on-primary); 
+            margin: 0; font-weight: 600; 
+            letter-spacing: -0.5px;
+        }
+        .current-report-breadcrumb {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7); 
+            margin-top: 2px;
+        }
+        
+        .report-display-area { flex-grow: 1; padding: 1.5rem; overflow-y: hidden; background-color: var(--bg-color); position: relative; }
+        .report-container {
+            opacity: 0; visibility: hidden; pointer-events: none;
+            background: #ffffff; border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow); height: 100%; position: absolute;
+            top: 1.5rem; left: 1.5rem; right: 1.5rem; bottom: 1.5rem;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            display: flex; flex-direction: column;
+        }
+        .report-container.active {
+            opacity: 1; visibility: visible; pointer-events: auto; z-index: 1;
+        }
+        .report-message-area {
+            flex-grow: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 2rem; text-align: center; color: var(--text-color-muted);
+        }
+        .report-message-area i { font-size: 3.5rem; margin-bottom: 1.25rem; color: var(--border-color-light); }
+        .report-message-area h3 { font-size: 1.3rem; color: var(--text-color-body); margin-bottom: 0.75rem; }
+
+        .iframe-loader {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 1rem;
+        }
+        .spinner {
+            width: 2.5rem; height: 2.5rem; border: 3px solid var(--bg-color-light);
+            border-top-color: var(--secondary-color); border-radius: 50%; animation: spin 0.8s linear infinite;
+        }
+        .loading-text { color: var(--secondary-color); font-weight: 500; font-size: 0.9rem; }
+
+        iframe {
+            width: 100%; height: 100%; border: none; border-radius: var(--border-radius);
+            opacity: 0; transition: opacity 0.4s 0.1s ease-in-out; flex-grow: 1;
+            background-color: #ffffff;
+        }
+        iframe.loaded { opacity: 1; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* --- Responsive --- */
+        @media (max-width: 992px) {
+            .sidebar-nav {
+                position: fixed; top: 0; left: 0; z-index: 1000;
+                transform: translateX(calc(-1 * var(--sidebar-width) - 5px));
+                box-shadow: 3px 0 15px rgba(0,0,0,0.1);
+            }
+            .sidebar-nav.open { transform: translateX(0); }
+            .sidebar-toggle { display: inline-block !important; }
+            .main-header-bar { padding: 0 1rem; }
+            .report-display-area,
+            .report-container.active { top: 1rem; left: 1rem; right: 1rem; bottom: 1rem;}
+        }
+         @media (min-width: 993px) {
+            .sidebar-toggle { display: none; }
+        }
+        @media (max-width: 768px) {
+            .main-header-content h1 { font-size: 1.15rem; }
+            .current-report-breadcrumb { font-size: 0.8rem; }
+            :root { --sidebar-width: 260px; }
+            .report-display-area,
+            .report-container.active { top: 0.75rem; left: 0.75rem; right: 0.75rem; bottom: 0.75rem;}
+        }
+        .report-container.fullscreen {
+            top:0; left:0; right:0; bottom:0; width: 100vw; height: 100vh;
+            position: fixed; z-index: 2000; padding: 0; border-radius: 0;
+        }
+        .dashboard-wrapper.report-fullscreen .sidebar-nav,
+        .dashboard-wrapper.report-fullscreen .main-header-bar { display: none; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar-nav">
+            <div class="sidebar-nav-header">
+                <div class="sidebar-logo-container">
+                    <img src="https://iili.io/3ZAxEgI.png" alt="Sicoob Logo" class="sidebar-logo">
+                </div>
+                <div class="sidebar-header-content">
+                    <h2 class="sidebar-title">Power BI Suite</h2>
+                    <input type="search" class="search-reports" placeholder="Buscar relatórios...">
+                </div>
+            </div>
+            <div class="sidebar-content" id="sidebar-content-list">
+                <p class="no-results hidden">Nenhum relatório encontrado.</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header-bar">
+                <button class="sidebar-toggle" aria-label="Abrir menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="main-header-content">
+                    <h1>Painel Estratégico Integrado</h1>
+                    <p class="current-report-breadcrumb" id="current-report-breadcrumb">Selecione um relatório</p>
+                </div>
+                <button class="fullscreen-toggle" aria-label="Tela cheia" title="Alternar Tela Cheia">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </header>
+            <div class="report-display-area" id="report-display-area">
+                {/* Relatórios serão inseridos aqui pelo JS */}
+            </div>
+        </main>
+    </div>
+
+    <script>
+    // JavaScript (sem alterações nesta rodada, pois o problema do logo é externo ou de cache)
+    // O JS da resposta anterior continua válido.
+    document.addEventListener('DOMContentLoaded', () => {
+        const reportGroupsConfig = [
+            {
+                groupId: "negocios", groupName: "Negócios", groupIcon: "fas fa-briefcase", isOpenDefault: true,
+                reports: [
+                    { id: "a-bordo", title: "A Bordo", icon: "fas fa-ship", url: "https://app.powerbi.com/reportEmbed?reportId=b2354559-4f5e-4865-a030-4ca26981cefc&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d" },
+                    { id: "consorcios", title: "Consórcios", icon: "fas fa-handshake", url: "https://app.powerbi.com/reportEmbed?reportId=3838bf32-d4ac-4a3b-a257-6a5e8b0a49a3&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d" },
+                    { id: "sipag", title: "Sipag", icon: "fas fa-credit-card", url: "https://app.powerbi.com/reportEmbed?reportId=6c3de2d2-b42f-42f4-aad5-cae3bd6ef78f&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d" }
+                ]
+            },
+            {
+                groupId: "financeiro", groupName: "Financeiro", groupIcon: "fas fa-chart-pie", isOpenDefault: true,
+                reports: [
+                    { id: "gestao-carteiras", title: "Gestão de Carteiras", icon: "fas fa-wallet", url: "https://app.powerbi.com/reportEmbed?reportId=a1687397-22ec-4006-9dd5-e935e636ce29&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d" },
+                    { id: "custo-credito", title: "Custo Crédito", icon: "fas fa-percentage", url: "" }
+                ]
+            },
+            {
+                groupId: "associados", groupName: "Associados", groupIcon: "fas fa-users", isOpenDefault: false,
+                reports: [
+                    { id: "propensos", title: "Propensos Crédito", icon: "fas fa-user-check", url: "" },
+                    { id: "portifolio", title: "Portfólio Cartões", icon: "far fa-address-card", url: "" }
+                ]
+            },
+            {
+                groupId: "sistemas", groupName: "Sistemas", groupIcon: "fas fa-cogs", isOpenDefault: false,
+                reports: [
+                    { id: "lounge-key", title: "Lounge Key", icon: "fas fa-key", url: "https://app.powerbi.com/reportEmbed?reportId=354bb4c3-09ad-4baa-a209-65e471" }
+                ]
+            }
+        ];
+
+        const sidebar = document.querySelector('.sidebar-nav');
+        const sidebarToggle = document.querySelector('.sidebar-toggle');
+        const sidebarContentList = document.getElementById('sidebar-content-list');
+        const reportDisplayArea = document.getElementById('report-display-area');
+        const currentReportBreadcrumb = document.getElementById('current-report-breadcrumb');
+        const searchInput = document.querySelector('.search-reports');
+        const noResultsMessage = sidebarContentList.querySelector('.no-results');
+        const fullscreenToggle = document.querySelector('.fullscreen-toggle');
+        const dashboardWrapper = document.querySelector('.dashboard-wrapper');
+        let activeReportContainer = null;
+
+        function renderSidebar() {
+            let html = "";
+            reportGroupsConfig.forEach(group => {
+                html += `
+                    <details class="nav-group" id="details-${group.groupId}" ${group.isOpenDefault ? 'open' : ''}>
+                        <summary class="nav-header">
+                            <div class="nav-icon"><i class="${group.groupIcon}"></i></div>
+                            <h3 class="nav-title">${group.groupName}</h3>
+                        </summary>
+                        <div class="nav-links">`;
+                group.reports.forEach(report => {
+                    html += `
+                        <a href="#${report.id}" class="nav-link" data-report-id="${report.id}" data-report-url="${report.url}" data-report-title="${report.title}">
+                            <i class="${report.icon}"></i> ${report.title}
+                        </a>`;
+                });
+                html += `</div></details>`;
+            });
+            sidebarContentList.insertAdjacentHTML('afterbegin', html);
+            renderReportContainers();
+        }
+
+        function renderReportContainers() {
+            let html = "";
+            reportGroupsConfig.forEach(group => {
+                group.reports.forEach(report => {
+                    html += `
+                        <section id="${report.id}" class="report-container" data-title="${report.title}">
+                            <div class="iframe-loader hidden"><div class="spinner"></div><div class="loading-text"></div></div>
+                            <div class="report-message-area"></div>
+                            <iframe title="Relatório ${report.title}" src="about:blank" allowfullscreen data-loaded="false"></iframe>
+                        </section>`;
+                });
+            });
+            reportDisplayArea.innerHTML = html;
+        }
+        
+        function showReport(reportId, reportUrl, reportTitle) {
+            const targetReportContainer = document.getElementById(reportId);
+            if (!targetReportContainer) return;
+
+            document.querySelectorAll('.report-container.active').forEach(rc => rc.classList.remove('active'));
+            targetReportContainer.classList.add('active');
+            activeReportContainer = targetReportContainer;
+
+            const iframe = targetReportContainer.querySelector('iframe');
+            const loader = targetReportContainer.querySelector('.iframe-loader');
+            const loadingTextEl = loader.querySelector('.loading-text');
+            const messageArea = targetReportContainer.querySelector('.report-message-area');
+            
+            messageArea.innerHTML = '';
+            messageArea.classList.add('hidden');
+            iframe.style.display = 'block';
+
+            if (iframe.dataset.loaded === 'false') {
+                if (reportUrl && reportUrl.trim() !== "") {
+                    loader.classList.remove('hidden');
+                    loadingTextEl.textContent = `Carregando ${reportTitle}...`;
+                    iframe.style.opacity = '0'; 
+                    setTimeout(() => { iframe.src = reportUrl; }, 50);
+                } else {
+                    loader.classList.add('hidden');
+                    displayReportMessage(targetReportContainer, 'info', 'URL não configurada', `O relatório "${reportTitle}" não possui uma URL definida.`);
+                    iframe.style.display = 'none';
+                }
+            } else {
+                loader.classList.add('hidden');
+                if (iframe.dataset.loaded === "true") {
+                    iframe.style.display = 'block';
+                    messageArea.classList.add('hidden');
+                } else if (iframe.dataset.loaded === "error") {
+                     displayReportMessage(targetReportContainer, 'error', 'Falha ao Carregar', `Houve um problema ao carregar o relatório "${reportTitle}" anteriormente.`);
+                }
+            }
+            updateActiveReportBreadcrumb(reportTitle);
+        }
+
+        function displayReportMessage(container, type = 'info', title, text) {
+            const messageArea = container.querySelector('.report-message-area');
+            if (!messageArea) return;
+            let iconClass = 'fas fa-info-circle';
+            if (type === 'error') iconClass = 'fas fa-exclamation-triangle';
+            if (type === 'empty') iconClass = 'fas fa-folder-open';
+            messageArea.innerHTML = `
+                <i class="${iconClass}"></i>
+                <h3>${title}</h3>
+                <p>${text || 'Por favor, verifique a configuração.'}</p>`;
+            messageArea.classList.remove('hidden');
+            container.querySelector('iframe').style.display = 'none';
+        }
+
+        function saveSidebarState() { localStorage.setItem('sidebarOpen', sidebar.classList.contains('open')); }
+        function loadSidebarState() {
+            const isOpen = localStorage.getItem('sidebarOpen') === 'true';
+            if (window.innerWidth > 992) {
+                 if (isOpen) sidebar.classList.add('open'); else sidebar.classList.remove('open');
+            } else {
+                 sidebar.classList.remove('open');
+            }
+            sidebarToggle.setAttribute('aria-expanded', sidebar.classList.contains('open'));
+        }
+        function saveDetailsState() {
+            document.querySelectorAll('.nav-group[id^="details-"]').forEach(details => {
+                localStorage.setItem(details.id + '_open', details.hasAttribute('open'));
+            });
+        }
+        function loadDetailsState() {
+            document.querySelectorAll('.nav-group[id^="details-"]').forEach(details => {
+                const storedState = localStorage.getItem(details.id + '_open');
+                if (storedState === 'true') details.setAttribute('open', '');
+                else if (storedState === 'false') details.removeAttribute('open');
+            });
+        }
+        
+        function initSidebarToggle() {
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                saveSidebarState();
+                sidebarToggle.setAttribute('aria-expanded', sidebar.classList.contains('open'));
+            });
+            document.addEventListener('click', (event) => {
+                if (window.innerWidth <= 992 && sidebar.classList.contains('open')) {
+                    if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                        sidebar.classList.remove('open');
+                        saveSidebarState();
+                        sidebarToggle.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+        }
+
+        function initReportNavigation() {
+            sidebarContentList.addEventListener('click', (e) => {
+                const link = e.target.closest('.nav-link');
+                if (link) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-link.active').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    const reportId = link.dataset.reportId;
+                    const reportUrl = link.dataset.reportUrl;
+                    const reportTitle = link.dataset.reportTitle;
+
+                    showReport(reportId, reportUrl, reportTitle);
+                    window.location.hash = reportId;
+
+                    if (window.innerWidth <= 992 && sidebar.classList.contains('open')) {
+                        sidebar.classList.remove('open');
+                        saveSidebarState();
+                        sidebarToggle.setAttribute('aria-expanded', 'false');
+                    }
+                }
+            });
+
+            reportDisplayArea.addEventListener('load', (e) => {
+                if (e.target.tagName === 'IFRAME') {
+                    const iframe = e.target;
+                    iframe.dataset.loaded = 'true';
+                    iframe.style.opacity = '1'; 
+                    const parentContainer = iframe.closest('.report-container');
+                    if (parentContainer) {
+                        parentContainer.querySelector('.iframe-loader').classList.add('hidden');
+                        iframe.classList.add('loaded');
+                        parentContainer.querySelector('.report-message-area').classList.add('hidden');
+                    }
+                }
+            }, true);
+
+            reportDisplayArea.addEventListener('error', (e) => {
+                 if (e.target.tagName === 'IFRAME') {
+                    const iframe = e.target;
+                    iframe.dataset.loaded = 'error';
+                    iframe.style.opacity = '1'; 
+                    const parentContainer = iframe.closest('.report-container');
+                    console.error('Falha ao carregar iframe src: ', iframe.src);
+                    if (parentContainer) {
+                        parentContainer.querySelector('.iframe-loader').classList.add('hidden');
+                        displayReportMessage(parentContainer, 'error', 'Falha ao Carregar', `O relatório "${parentContainer.dataset.title}" não pôde ser carregado.`);
+                    }
+                }
+            }, true);
+        }
+        
+        function debounce(func, delay) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+        function initSearchFilter() {
+            searchInput.addEventListener('input', debounce(function(e) {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                let hasResults = false;
+                document.querySelectorAll('.nav-group').forEach(group => {
+                    let groupHasVisibleLink = false;
+                    group.querySelectorAll('.nav-link').forEach(link => {
+                        const linkText = link.textContent.toLowerCase();
+                        if (linkText.includes(searchTerm)) {
+                            link.classList.remove('hidden');
+                            groupHasVisibleLink = true;
+                            hasResults = true;
+                        } else {
+                            link.classList.add('hidden');
+                        }
+                    });
+                    const groupTitle = group.querySelector('.nav-title').textContent.toLowerCase();
+                    if (groupHasVisibleLink || (searchTerm && groupTitle.includes(searchTerm))) {
+                        group.classList.remove('hidden');
+                    } else {
+                        group.classList.add('hidden');
+                    }
+                });
+                noResultsMessage.classList.toggle('hidden', hasResults || searchTerm.length === 0);
+            }, 250));
+        }
+
+        function initFullscreen() {
+            fullscreenToggle.addEventListener('click', () => {
+                if (!activeReportContainer) return;
+                const isCurrentlyFullscreen = dashboardWrapper.classList.contains('report-fullscreen');
+                dashboardWrapper.classList.toggle('report-fullscreen', !isCurrentlyFullscreen);
+                activeReportContainer.classList.toggle('fullscreen', !isCurrentlyFullscreen);
+                fullscreenToggle.innerHTML = !isCurrentlyFullscreen ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>';
+                fullscreenToggle.setAttribute('aria-label', !isCurrentlyFullscreen ? 'Sair da tela cheia' : 'Tela cheia');
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && dashboardWrapper.classList.contains('report-fullscreen')) {
+                    dashboardWrapper.classList.remove('report-fullscreen');
+                    if(activeReportContainer) activeReportContainer.classList.remove('fullscreen');
+                    fullscreenToggle.innerHTML = '<i class="fas fa-expand"></i>';
+                    fullscreenToggle.setAttribute('aria-label', 'Tela cheia');
+                }
+            });
+        }
+
+        function initDeepLinking() {
+            function activateReportFromHash() {
+                let reportToLoad = false;
+                if (window.location.hash) {
+                    const reportIdFromHash = window.location.hash.substring(1);
+                    const linkToActivate = document.querySelector(`.nav-link[data-report-id="${reportIdFromHash}"]`);
+                    if (linkToActivate) {
+                        const parentDetails = linkToActivate.closest('details.nav-group');
+                        if (parentDetails && !parentDetails.hasAttribute('open')) {
+                            parentDetails.setAttribute('open', '');
+                        }
+                        linkToActivate.click();
+                        reportToLoad = true;
+                    }
+                }
+                if (!reportToLoad) {
+                    displayInitialMessage();
+                }
+            }
+            window.addEventListener('hashchange', activateReportFromHash);
+            activateReportFromHash();
+        }
+        
+        function displayInitialMessage() {
+            const firstReportContainer = reportDisplayArea.querySelector('.report-container');
+            if (firstReportContainer && !document.querySelector('.report-container.active')) {
+                firstReportContainer.classList.add('active');
+                activeReportContainer = firstReportContainer;
+                displayReportMessage(firstReportContainer, 'empty', 'Bem-vindo(a)!', 'Selecione um relatório no menu lateral para começar a explorar os dados.');
+                updateActiveReportBreadcrumb('Nenhum relatório selecionado');
+            }
+        }
+
+        function updateActiveReportBreadcrumb(title) {
+            currentReportBreadcrumb.textContent = title || 'Nenhum relatório selecionado';
+        }
+        
+        renderSidebar();
+        loadSidebarState();
+        loadDetailsState();
+        initSidebarToggle();
+        initReportNavigation();
+        initSearchFilter();
+        initFullscreen();
+        initDeepLinking();
+
+        sidebarContentList.addEventListener('toggle', (e) => {
+            if (e.target.tagName === 'DETAILS') { saveDetailsState(); }
+        }, true);
+    });
+    </script>
+
+    <script type="module">
+        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+        Chatbot.init({
+            chatflowid: "4f70393d-a57f-4d56-835f-0e6f6156ce6e",
+            apiHost: "https://cloud.flowiseai.com",
+        })
+    </script>
+</body>
+</html>
