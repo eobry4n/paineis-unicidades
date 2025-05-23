@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Power BI Suite | Sicoob Visão Estratégica</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         :root {
             --primary-color: #003641;
@@ -18,7 +18,7 @@
             --sidebar-width: 280px;
             --header-height: 70px;
             --border-radius: 6px;
-            --box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
             --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --border-color-light: #dee2e6;
             --bg-color-light: #f8f9fa;
@@ -28,319 +28,643 @@
             --nav-link-active-border: #00877A;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-
-        body {
-            background: var(--bg-color); color: var(--text-color-body);
-            line-height: 1.6; height: 100vh; overflow: hidden;
-            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+                sans-serif;
         }
 
-        .dashboard-wrapper { display: flex; height: 100vh; }
+        body {
+            background: var(--bg-color);
+            color: var(--text-color-body);
+            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .dashboard-wrapper {
+            display: flex;
+            height: 100vh;
+        }
 
         /* --- Sidebar --- */
         .sidebar-nav {
-            width: var(--sidebar-width); background-color: var(--sidebar-bg);
-            padding: 0; overflow-y: hidden;
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            padding: 0;
+            overflow-y: hidden;
             transition: transform var(--transition), width var(--transition);
             border-right: 1px solid var(--border-color-light);
-            height: 100%; flex-shrink: 0; display: flex; flex-direction: column;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.03);
+            height: 100%;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.03);
         }
+
         .sidebar-nav-header {
             padding: 0;
-            border-bottom: 1px solid var(--border-color-light); flex-shrink: 0;
+            border-bottom: 1px solid var(--border-color-light);
+            flex-shrink: 0;
         }
+
         .sidebar-logo-container {
             background-color: var(--primary-color);
             padding: 1rem 1.25rem;
-            min-height: 60px; /* Garante altura mínima */
+            min-height: 60px;
+            /* Garante altura mínima */
             display: flex;
             align-items: center;
             justify-content: center;
         }
+
         .sidebar-logo {
             max-width: 150px;
             height: auto;
-            display: block; /* Alterado para block */
+            display: block;
+            /* Alterado para block */
         }
+
+        /* Estilo para o texto alt caso a imagem não carregue */
         .sidebar-logo[alt]:after {
             content: attr(alt);
             display: block;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
             font-style: italic;
             text-align: center;
         }
+
         .sidebar-header-content {
             padding: 1rem 1.25rem;
         }
+
         .sidebar-title {
             font-size: 1.1rem;
-            color: var(--primary-color); font-weight: 600;
+            color: var(--primary-color);
+            font-weight: 600;
             margin-bottom: 0.85rem;
         }
+
         .search-reports {
-            width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--border-color-light);
-            border-radius: var(--border-radius); font-size: 0.9rem;
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            border: 1px solid var(--border-color-light);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
             transition: border-color var(--transition), box-shadow var(--transition);
         }
+
         .search-reports:focus {
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 0.2rem rgba(0, 174, 157, 0.25);
             outline: none;
         }
-        .sidebar-content {
-            padding: 0.75rem 1.25rem; overflow-y: auto; flex-grow: 1;
-        }
-        .sidebar-content::-webkit-scrollbar { width: 6px; }
-        .sidebar-content::-webkit-scrollbar-track { background: transparent; }
-        .sidebar-content::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
-        .sidebar-content::-webkit-scrollbar-thumb:hover { background: #bbb; }
 
-        .nav-group { margin-bottom: 0.5rem; }
+        .sidebar-content {
+            padding: 0.75rem 1.25rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-content::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .sidebar-content::-webkit-scrollbar-thumb:hover {
+            background: #bbb;
+        }
+
+        .nav-group {
+            margin-bottom: 0.5rem;
+        }
+
         .nav-group summary {
-            display: flex; align-items: center; gap: 0.85rem;
-            padding: 0.8rem 0.6rem; border-radius: var(--border-radius);
-            cursor: pointer; list-style: none; transition: background-color var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.8rem 0.6rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            list-style: none;
+            transition: background-color var(--transition);
             user-select: none;
         }
-        .nav-group summary:hover { background-color: var(--bg-color-light); }
-        .nav-group summary::-webkit-details-marker { display: none; }
+
+        .nav-group summary:hover {
+            background-color: var(--bg-color-light);
+        }
+
+        .nav-group summary::-webkit-details-marker {
+            display: none;
+        }
+
         .nav-group summary::after {
-            content: '\\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
-            margin-left: auto; transition: transform var(--transition); font-size: 0.75em;
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            margin-left: auto;
+            transition: transform var(--transition);
+            font-size: 0.75em;
             color: var(--text-color-muted);
         }
-        .nav-group[open] summary::after { transform: rotate(180deg); }
-        .nav-icon {
-            width: 30px; height: 30px; background: var(--bg-color-light);
-            border-radius: var(--border-radius); display: flex; align-items: center;
-            justify-content: center; color: var(--secondary-color);
-            flex-shrink: 0; font-size: 0.85rem; border: 1px solid var(--border-color-light);
-        }
-        .nav-group[open] .nav-icon { background: var(--secondary-color); color: white; border-color: var(--secondary-color);}
 
-        .nav-title { font-weight: 600; color: var(--primary-color); font-size: 0.95rem; }
-        .nav-links { display: flex; flex-direction: column; gap: 0.25rem; padding-left: 0.5rem; margin-top: 0.5rem; border-left: 2px solid var(--border-color-light); margin-left: 15px; }
+        .nav-group[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .nav-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--bg-color-light);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            flex-shrink: 0;
+            font-size: 0.85rem;
+            border: 1px solid var(--border-color-light);
+        }
+
+        .nav-group[open] .nav-icon {
+            background: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .nav-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding-left: 0.5rem;
+            margin-top: 0.5rem;
+            border-left: 2px solid var(--border-color-light);
+            margin-left: 15px;
+        }
+
         .nav-link {
-            padding: 0.65rem 1rem; border-radius: var(--border-radius); display: flex;
-            align-items: center; gap: 0.75rem; text-decoration: none;
-            color: var(--text-color-muted); transition: all 0.2s ease-in-out; font-size: 0.875rem;
+            padding: 0.65rem 1rem;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-color-muted);
+            transition: all 0.2s ease-in-out;
+            font-size: 0.875rem;
             border-left: 3px solid transparent;
         }
-        .nav-link:hover { background: var(--bg-color-hover-light); color: var(--primary-color); transform: translateX(2px); }
+
+        .nav-link:hover {
+            background: var(--bg-color-hover-light);
+            color: var(--primary-color);
+            transform: translateX(2px);
+        }
+
         .nav-link.active {
             background-color: var(--bg-color-light);
             color: var(--nav-link-active-bg) !important;
             font-weight: 600;
             border-left-color: var(--nav-link-active-border);
         }
-        .nav-link.active i { color: var(--nav-link-active-bg); }
-        .nav-link i { color: var(--text-color-muted); width: 18px; text-align: center; transition: color 0.2s ease; font-size: 0.9em; }
-        .no-results { padding: 1rem; text-align: center; color: var(--text-color-muted); font-style: italic; }
-        .hidden { display: none !important; }
+
+        .nav-link.active i {
+            color: var(--nav-link-active-bg);
+        }
+
+        .nav-link i {
+            color: var(--text-color-muted);
+            width: 18px;
+            text-align: center;
+            transition: color 0.2s ease;
+            font-size: 0.9em;
+        }
+
+        .no-results {
+            padding: 1rem;
+            text-align: center;
+            color: var(--text-color-muted);
+            font-style: italic;
+        }
+
+        .hidden {
+            display: none !important;
+        }
 
         /* --- Main Content --- */
-        .main-content { flex-grow: 1; display: flex; flex-direction: column; height: 100vh; overflow-y: hidden; }
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-y: hidden;
+        }
+
         .main-header-bar {
-            display: flex; align-items: center; padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
             height: var(--header-height);
-            background-color: var(--primary-color); 
-            color: var(--text-color-on-primary); 
-            border-bottom: 1px solid #002a33; 
+            background-color: var(--primary-color);
+            color: var(--text-color-on-primary);
+            border-bottom: 1px solid #002a33;
             flex-shrink: 0;
         }
-        .sidebar-toggle, .fullscreen-toggle {
-            background: transparent; border: none; font-size: 1.4rem;
-            color: var(--text-color-on-primary); 
-            cursor: pointer; margin-right: 1rem;
-            padding: 0.5rem; border-radius: var(--border-radius);
+
+        .sidebar-toggle,
+        .fullscreen-toggle {
+            background: transparent;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--text-color-on-primary);
+            cursor: pointer;
+            margin-right: 1rem;
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
             transition: background-color var(--transition), color var(--transition);
         }
-        .sidebar-toggle:hover, .fullscreen-toggle:hover {
-            background-color: rgba(255,255,255,0.1); 
+
+        .sidebar-toggle:hover,
+        .fullscreen-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
-        .fullscreen-toggle { margin-left: auto; margin-right: 0; font-size: 1.15rem; }
-        .main-header-content { flex-grow: 1; }
+
+        .fullscreen-toggle {
+            margin-left: auto;
+            margin-right: 0;
+            font-size: 1.15rem;
+        }
+
+        .main-header-content {
+            flex-grow: 1;
+        }
+
         .main-header-content h1 {
             font-size: 1.4rem;
-            color: var(--text-color-on-primary); 
-            margin: 0; font-weight: 600; 
+            color: var(--text-color-on-primary);
+            margin: 0;
+            font-weight: 600;
             letter-spacing: -0.5px;
         }
+
         .current-report-breadcrumb {
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.7); 
+            color: rgba(255, 255, 255, 0.7);
             margin-top: 2px;
         }
-        
-        .report-display-area { flex-grow: 1; padding: 1.5rem; overflow-y: hidden; background-color: var(--bg-color); position: relative; }
+
+        .report-display-area {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: hidden;
+            background-color: var(--bg-color);
+            position: relative;
+        }
+
         .report-container {
-            opacity: 0; visibility: hidden; pointer-events: none;
-            background: #ffffff; border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow); height: 100%; position: absolute;
-            top: 1.5rem; left: 1.5rem; right: 1.5rem; bottom: 1.5rem;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            display: flex; flex-direction: column;
-        }
-        .report-container.active {
-            opacity: 1; visibility: visible; pointer-events: auto; z-index: 1;
-        }
-        .report-message-area {
-            flex-grow: 1; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            padding: 2rem; text-align: center; color: var(--text-color-muted);
-        }
-        .report-message-area i { font-size: 3.5rem; margin-bottom: 1.25rem; color: var(--border-color-light); }
-        .report-message-area h3 { font-size: 1.3rem; color: var(--text-color-body); margin-bottom: 0.75rem; }
-
-        .iframe-loader {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 1rem;
-        }
-        .spinner {
-            width: 2.5rem; height: 2.5rem; border: 3px solid var(--bg-color-light);
-            border-top-color: var(--secondary-color); border-radius: 50%; animation: spin 0.8s linear infinite;
-        }
-        .loading-text { color: var(--secondary-color); font-weight: 500; font-size: 0.9rem; }
-
-        iframe {
-            width: 100%; height: 100%; border: none; border-radius: var(--border-radius);
-            opacity: 0; transition: opacity 0.4s 0.1s ease-in-out; flex-grow: 1;
-            background-color: #ffffff;
-        }
-        iframe.loaded { opacity: 1; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* --- Admin Modal --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex; /* Changed from none for transition */
-            align-items: center;
-            justify-content: center;
-            z-index: 2000; 
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
-            background-color: #fff;
-            padding: 25px 30px;
+            pointer-events: none;
+            background: #ffffff;
             border-radius: var(--border-radius);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            width: 90%;
-            max-width: 550px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        .modal-content h2 {
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            color: var(--primary-color);
-            font-size: 1.5rem;
-        }
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-color-body);
-        }
-        .form-group input[type="text"],
-        .form-group input[type="url"],
-        .form-group select {
-            width: 100%;
-            padding: 0.65rem 0.85rem;
-            border: 1px solid var(--border-color-light);
-            border-radius: var(--border-radius);
-            font-size: 0.9rem;
-            transition: border-color var(--transition), box-shadow var(--transition);
-        }
-        .form-group input[type="text"]:focus,
-        .form-group input[type="url"]:focus,
-        .form-group select:focus {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 0.2rem rgba(0, 174, 157, 0.25);
-            outline: none;
-        }
-        .modal-actions {
-            margin-top: 1.5rem;
+            box-shadow: var(--box-shadow);
+            height: 100%;
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            bottom: 1.5rem;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
             display: flex;
-            justify-content: flex-end;
-            gap: 0.75rem;
-        }
-        .modal-actions button {
-            padding: 0.7rem 1.2rem;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-weight: 500;
-            transition: background-color var(--transition);
-        }
-        .modal-actions button[type="submit"] {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        .modal-actions button[type="submit"]:hover {
-            background-color: #00877A; /* Darker shade of secondary */
-        }
-        .modal-actions button[type="button"] {
-            background-color: var(--bg-color-hover-light);
-            color: var(--text-color-body);
-            border: 1px solid var(--border-color-light);
-        }
-        .modal-actions button[type="button"]:hover {
-            background-color: #d3d9df;
-        }
-        .modal-content hr {
-            margin: 1.5rem 0;
-            border: 0;
-            border-top: 1px solid var(--border-color-light);
+            flex-direction: column;
         }
 
+        .report-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            z-index: 1;
+        }
+
+        .report-message-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-color-muted);
+        }
+
+        .report-message-area i {
+            font-size: 3.5rem;
+            margin-bottom: 1.25rem;
+            color: var(--border-color-light);
+        }
+
+        .report-message-area h3 {
+            font-size: 1.3rem;
+            color: var(--text-color-body);
+            margin-bottom: 0.75rem;
+        }
+
+        .iframe-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .spinner {
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 3px solid var(--bg-color-light);
+            border-top-color: var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading-text {
+            color: var(--secondary-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: var(--border-radius);
+            opacity: 0;
+            transition: opacity 0.4s 0.1s ease-in-out;
+            flex-grow: 1;
+            background-color: #ffffff;
+        }
+
+        iframe.loaded {
+            opacity: 1;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         /* --- Responsive --- */
         @media (max-width: 992px) {
             .sidebar-nav {
-                position: fixed; top: 0; left: 0; z-index: 1000;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
                 transform: translateX(calc(-1 * var(--sidebar-width) - 5px));
-                box-shadow: 3px 0 15px rgba(0,0,0,0.1);
+                box-shadow: 3px 0 15px rgba(0, 0, 0, 0.1);
             }
-            .sidebar-nav.open { transform: translateX(0); }
-            .sidebar-toggle { display: inline-block !important; }
-            .main-header-bar { padding: 0 1rem; }
+
+            .sidebar-nav.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle {
+                display: inline-block !important;
+            }
+
+            .main-header-bar {
+                padding: 0 1rem;
+            }
+
             .report-display-area,
-            .report-container.active { top: 1rem; left: 1rem; right: 1rem; bottom: 1rem;}
+            .report-container.active {
+                top: 1rem;
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+            }
         }
-         @media (min-width: 993px) {
-            .sidebar-toggle { display: none; }
+
+        @media (min-width: 993px) {
+            .sidebar-toggle {
+                display: none;
+            }
         }
+
         @media (max-width: 768px) {
-            .main-header-content h1 { font-size: 1.15rem; }
-            .current-report-breadcrumb { font-size: 0.8rem; }
-            :root { --sidebar-width: 260px; }
+            .main-header-content h1 {
+                font-size: 1.15rem;
+            }
+
+            .current-report-breadcrumb {
+                font-size: 0.8rem;
+            }
+
+            :root {
+                --sidebar-width: 260px;
+            }
+
             .report-display-area,
-            .report-container.active { top: 0.75rem; left: 0.75rem; right: 0.75rem; bottom: 0.75rem;}
+            .report-container.active {
+                top: 0.75rem;
+                left: 0.75rem;
+                right: 0.75rem;
+                bottom: 0.75rem;
+            }
         }
+
         .report-container.fullscreen {
-            top:0; left:0; right:0; bottom:0; width: 100vw; height: 100vh;
-            position: fixed; z-index: 1900; /* Below admin modal */
-            padding: 0; border-radius: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            z-index: 2000;
+            padding: 0;
+            border-radius: 0;
         }
+
         .dashboard-wrapper.report-fullscreen .sidebar-nav,
-        .dashboard-wrapper.report-fullscreen .main-header-bar { display: none; }
+        .dashboard-wrapper.report-fullscreen .main-header-bar {
+            display: none;
+        }
+
+        /* --- Modal para edição --- */
+        #edit-modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+        }
+
+        #edit-modal.active {
+            display: block;
+        }
+
+        #edit-modal .modal-content {
+            background-color: white;
+            margin: 2rem auto;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--box-shadow);
+            position: relative;
+        }
+
+        #edit-modal h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        #edit-modal button.close-modal {
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        #edit-modal section {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.8rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--primary-color);
+        }
+
+        input[type="text"],
+        input[type="url"],
+        select {
+            width: 100%;
+            padding: 0.4rem 0.6rem;
+            font-size: 1rem;
+            border: 1px solid var(--border-color-light);
+            border-radius: var(--border-radius);
+        }
+
+        .btn {
+            background-color: var(--secondary-color);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #b02a37;
+        }
+
+        .group-list,
+        .report-list {
+            margin-top: 1rem;
+            border: 1px solid var(--border-color-light);
+            border-radius: var(--border-radius);
+            max-height: 250px;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .item {
+            border-bottom: 1px solid var(--border-color-light);
+            padding: 0.3rem 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item .item-info {
+            flex-grow: 1;
+        }
+
+        .item button {
+            margin-left: 0.3rem;
+        }
+
+        .small-input {
+            width: 120px;
+            margin-right: 0.3rem;
+        }
+
+        .icon-preview {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .report-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .modal-footer {
+            text-align: right;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -348,11 +672,11 @@
         <aside class="sidebar-nav">
             <div class="sidebar-nav-header">
                 <div class="sidebar-logo-container">
-                    <img src="https://iili.io/3ZAxEgI.png" alt="Sicoob Logo" class="sidebar-logo">
+                    <img src="https://iili.io/3ZAxEgI.png" alt="Sicoob Logo" class="sidebar-logo" />
                 </div>
                 <div class="sidebar-header-content">
                     <h2 class="sidebar-title">Power BI Suite</h2>
-                    <input type="search" class="search-reports" placeholder="Buscar relatórios...">
+                    <input type="search" class="search-reports" placeholder="Buscar relatórios..." />
                 </div>
             </div>
             <div class="sidebar-content" id="sidebar-content-list">
@@ -374,675 +698,707 @@
                 </button>
             </header>
             <div class="report-display-area" id="report-display-area">
-                {/* Relatórios serão inseridos aqui pelo JS */}
+                <!-- Relatórios serão inseridos aqui pelo JS -->
             </div>
         </main>
     </div>
 
-    <div id="adminModal" class="modal-overlay">
+    <!-- Modal de edição -->
+    <div id="edit-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
         <div class="modal-content">
-            <h2>Adicionar Novo Relatório/Grupo</h2>
-            <form id="adminForm">
-                <div class="form-group">
-                    <label for="groupType">Gerenciar Grupo:</label>
-                    <select id="groupType">
-                        <option value="new">Criar Novo Grupo</option>
-                        <option value="existing">Adicionar a Grupo Existente</option>
-                    </select>
-                </div>
+            <button class="close-modal" aria-label="Fechar">&times;</button>
+            <h2 id="modal-title">Editar Grupos e Relatórios</h2>
 
-                <div id="newGroupSection">
-                    <div class="form-group">
-                        <label for="newGroupName">Nome do Novo Grupo:</label>
-                        <input type="text" id="newGroupName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="newGroupIcon">Ícone do Novo Grupo (ex: fas fa-folder):</label>
-                        <input type="text" id="newGroupIcon" placeholder="fas fa-folder">
-                    </div>
+            <section id="groups-section">
+                <h3>Grupos</h3>
+                <div>
+                    <input type="text" id="new-group-name" placeholder="Nome do grupo" />
+                    <input type="text" id="new-group-icon" placeholder="Ícone do grupo (ex: fas fa-briefcase)" />
+                    <button id="add-group-btn" class="btn">Adicionar Grupo</button>
                 </div>
+                <div class="group-list" id="group-list"></div>
+            </section>
 
-                <div id="existingGroupSection" style="display: none;">
-                    <div class="form-group">
-                        <label for="existingGroupName">Selecionar Grupo Existente:</label>
-                        <select id="existingGroupName"></select>
-                    </div>
+            <section id="reports-section" class="hidden">
+                <h3>Relatórios do grupo: <span id="reports-group-name"></span></h3>
+                <div>
+                    <input type="text" id="new-report-title" placeholder="Título do relatório" />
+                    <input type="text" id="new-report-icon" placeholder="Ícone do relatório (ex: fas fa-rocket-launch)" />
+                    <input type="url" id="new-report-url" placeholder="URL do relatório" />
+                    <button id="add-report-btn" class="btn">Adicionar Relatório</button>
+                    <button id="back-to-groups-btn" class="btn btn-danger" style="margin-left: 0.5rem;">Voltar aos Grupos</button>
                 </div>
+                <div class="report-list" id="report-list"></div>
+            </section>
 
-                <hr>
-
-                <div class="form-group">
-                    <label for="reportName">Nome do Link (Relatório):</label>
-                    <input type="text" id="reportName" required>
-                </div>
-                <div class="form-group">
-                    <label for="reportIcon">Ícone do Link (ex: fas fa-chart-bar):</label>
-                    <input type="text" id="reportIcon" placeholder="fas fa-chart-bar">
-                </div>
-                <div class="form-group">
-                    <label for="reportUrl">URL do Power BI:</label>
-                    <input type="url" id="reportUrl" required placeholder="https://app.powerbi.com/...">
-                </div>
-
-                <div class="modal-actions">
-                    <button type="submit" id="saveReportButton">Salvar</button>
-                    <button type="button" id="cancelAdminModalButton">Cancelar</button>
-                </div>
-            </form>
+            <div class="modal-footer">
+                <button id="save-changes-btn" class="btn">Salvar Alterações</button>
+            </div>
         </div>
     </div>
 
     <script>
-    // Configuração inicial dos relatórios (pode ser carregada do localStorage no futuro)
-    let reportGroupsConfig = [
-        {
-            groupId: "negocios", groupName: "Negócios", groupIcon: "fas fa-briefcase", isOpenDefault: true,
-            reports: [
-                { id: "a-bordo", title: "A Bordo", icon: "fas fa-rocket", url: "https://app.powerbi.com/reportEmbed?reportId=b2354559-4f5e-4865-a030-4ca26981cefc&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d" },
-                { id: "consorcios", title: "Consórcios", icon: "fas fa-handshake", url: "https://app.powerbi.com/reportEmbed?reportId=3838bf32-d4ac-4a3b-a257-6a5e8b0a49a3&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d" },
-                { id: "sipag", title: "Sipag", icon: "fas fa-credit-card", url: "https://app.powerbi.com/reportEmbed?reportId=6c3de2d2-b42f-42f4-aad5-cae3bd6ef78f&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d" }
-            ]
-        },
-        {
-            groupId: "financeiro", groupName: "Financeiro", groupIcon: "fas fa-chart-pie", isOpenDefault: true,
-            reports: [
-                { id: "gestao-carteiras", title: "Gestão de Carteiras", icon: "fas fa-users-line", url: "https://app.powerbi.com/reportEmbed?reportId=a1687397-22ec-4006-9dd5-e935e636ce29&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d" },
-                { id: "custo-credito", title: "Custo Crédito", icon: "fas fa-percentage", url: "" }
-            ]
-        },
-        {
-            groupId: "associados", groupName: "Associados", groupIcon: "fas fa-users", isOpenDefault: false,
-            reports: [
-                { id: "propensos", title: "Propensos Crédito", icon: "fas fa-user-check", url: "" },
-                { id: "portifolio", title: "Portfólio Cartões", icon: "far fa-address-card", url: "" }
-            ]
-        },
-        {
-            groupId: "sistemas", groupName: "Sistemas", groupIcon: "fas fa-cogs", isOpenDefault: false,
-            reports: [
-                // Exemplo de URL incompleta para teste de erro (mantido do original)
-                { id: "lounge-key", title: "Lounge Key", icon: "fas fa-key", url: "https://app.powerbi.com/reportEmbed?reportId=354bb4c3-09ad-4baa-a209-65e471" }
-            ]
-        }
-    ];
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const sidebar = document.querySelector('.sidebar-nav');
-        const sidebarToggle = document.querySelector('.sidebar-toggle');
-        const sidebarContentList = document.getElementById('sidebar-content-list');
-        const reportDisplayArea = document.getElementById('report-display-area');
-        const currentReportBreadcrumb = document.getElementById('current-report-breadcrumb');
-        const searchInput = document.querySelector('.search-reports');
-        const noResultsMessage = sidebarContentList.querySelector('.no-results');
-        const fullscreenToggle = document.querySelector('.fullscreen-toggle');
-        const dashboardWrapper = document.querySelector('.dashboard-wrapper');
-        let activeReportContainer = null;
-
-        // Admin Modal Elements
-        const adminModal = document.getElementById('adminModal');
-        const adminForm = document.getElementById('adminForm');
-        const groupTypeSelect = document.getElementById('groupType');
-        const newGroupSection = document.getElementById('newGroupSection');
-        const existingGroupSection = document.getElementById('existingGroupSection');
-        const newGroupNameInput = document.getElementById('newGroupName');
-        const newGroupIconInput = document.getElementById('newGroupIcon');
-        const existingGroupNameSelect = document.getElementById('existingGroupName');
-        const reportNameInput = document.getElementById('reportName');
-        const reportIconInput = document.getElementById('reportIcon');
-        const reportUrlInput = document.getElementById('reportUrl');
-        const cancelAdminModalButton = document.getElementById('cancelAdminModalButton');
-
-
-        function renderSidebar() {
-            let html = "";
-            reportGroupsConfig.forEach(group => {
-                html += `
-                    <details class="nav-group" id="details-${group.groupId}" ${group.isOpenDefault ? 'open' : ''}>
-                        <summary class="nav-header">
-                            <div class="nav-icon"><i class="${group.groupIcon || 'fas fa-folder'}"></i></div>
-                            <h3 class="nav-title">${group.groupName}</h3>
-                        </summary>
-                        <div class="nav-links">`;
-                group.reports.forEach(report => {
-                    html += `
-                        <a href="#${report.id}" class="nav-link" data-report-id="${report.id}" data-report-url="${report.url}" data-report-title="${report.title}">
-                            <i class="${report.icon || 'fas fa-file-alt'}"></i> ${report.title}
-                        </a>`;
-                });
-                html += `</div></details>`;
-            });
-            // Preserve no-results message or add it if not present
-            const currentNoResults = sidebarContentList.querySelector('.no-results');
-            sidebarContentList.innerHTML = html; // This adds the groups
-            if (currentNoResults) { // Add it back if it was there
-                 sidebarContentList.appendChild(currentNoResults);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Função utilitária para carregar do localStorage ou default
+            function loadConfig() {
+                const saved = localStorage.getItem('reportGroupsConfig');
+                if (saved) {
+                    try {
+                        return JSON.parse(saved);
+                    } catch {
+                        return null;
+                    }
+                }
+                return null;
             }
-            renderReportContainers();
-        }
 
-        function renderReportContainers() {
-            let html = "";
-            reportGroupsConfig.forEach(group => {
-                group.reports.forEach(report => {
+            // Dados padrão
+            const defaultReportGroupsConfig = [
+                {
+                    groupId: "negocios",
+                    groupName: "Negócios",
+                    groupIcon: "fas fa-briefcase",
+                    isOpenDefault: true,
+                    reports: [
+                        {
+                            id: "a-bordo",
+                            title: "A Bordo",
+                            icon: "fas fa-rocket-launch",
+                            url:
+                                "https://app.powerbi.com/reportEmbed?reportId=b2354559-4f5e-4865-a030-4ca26981cefc&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d",
+                        },
+                        {
+                            id: "consorcios",
+                            title: "Consórcios",
+                            icon: "fas fa-handshake",
+                            url:
+                                "https://app.powerbi.com/reportEmbed?reportId=3838bf32-d4ac-4a3b-a257-6a5e8b0a49a3&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d",
+                        },
+                        {
+                            id: "sipag",
+                            title: "Sipag",
+                            icon: "fas fa-credit-card",
+                            url:
+                                "https://app.powerbi.com/reportEmbed?reportId=6c3de2d2-b42f-42f4-aad5-cae3bd6ef78f&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d",
+                        },
+                        { id: "propensos", title: "Propensos Crédito", icon: "fas fa-user-check", url: "" },
+                        { id: "Seguros", title: "Seguros", icon: "far fa-address-card", url: "" },
+                    ],
+                },
+                {
+                    groupId: "gestao",
+                    groupName: "Gestão",
+                    groupIcon: "fas fa-chart-pie",
+                    isOpenDefault: true,
+                    reports: [
+                        {
+                            id: "gestao-carteiras",
+                            title: "Gestão de Carteiras",
+                            icon: "fas fa-wallet",
+                            url:
+                                "https://app.powerbi.com/reportEmbed?reportId=a1687397-22ec-4006-9dd5-e935e636ce29&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d",
+                        },
+                        { id: "custo-credito", title: "Custo Crédito", icon: "fas fa-percentage", url: "" },
+                    ],
+                },
+                {
+                    groupId: "Controles e Riscos",
+                    groupName: "Controles e Riscos",
+                    groupIcon: "fas fa-users",
+                    isOpenDefault: false,
+                    reports: [
+                        { id: "propensos", title: "Propensos Crédito", icon: "fas fa-user-check", url: "" },
+                        { id: "portifolio", title: "Portfólio Cartões", icon: "far fa-address-card", url: "" },
+                    ],
+                },
+                {
+                    groupId: "sistemas",
+                    groupName: "Sistemas",
+                    groupIcon: "fas fa-cogs",
+                    isOpenDefault: false,
+                    reports: [{ id: "lounge-key", title: "Lounge Key", icon: "fas fa-key", url: "https://app.powerbi.com/reportEmbed?reportId=354bb4c3-09ad-4baa-a209-65e471" }],
+                },
+            ];
+
+            // Estado dos grupos e relatórios (carregado do localStorage ou padrão)
+            let reportGroupsConfig = loadConfig() || defaultReportGroupsConfig;
+
+            const sidebarContentList = document.getElementById('sidebar-content-list');
+            const reportDisplayArea = document.getElementById('report-display-area');
+            const currentReportBreadcrumb = document.getElementById('current-report-breadcrumb');
+            const searchInput = document.querySelector('.search-reports');
+            const noResultsMessage = sidebarContentList.querySelector('.no-results');
+            const sidebar = document.querySelector('.sidebar-nav');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const fullscreenToggle = document.querySelector('.fullscreen-toggle');
+            const dashboardWrapper = document.querySelector('.dashboard-wrapper');
+            let activeReportContainer = null;
+
+            // Modal e elementos edição
+            const editModal = document.getElementById('edit-modal');
+            const closeModalBtn = editModal.querySelector('.close-modal');
+            const groupListEl = document.getElementById('group-list');
+            const reportSection = document.getElementById('reports-section');
+            const groupsSection = document.getElementById('groups-section');
+            const reportsGroupNameEl = document.getElementById('reports-group-name');
+            const reportListEl = document.getElementById('report-list');
+
+            // Inputs para grupos
+            const newGroupNameInput = document.getElementById('new-group-name');
+            const newGroupIconInput = document.getElementById('new-group-icon');
+            const addGroupBtn = document.getElementById('add-group-btn');
+
+            // Inputs para relatórios
+            const newReportTitleInput = document.getElementById('new-report-title');
+            const newReportIconInput = document.getElementById('new-report-icon');
+            const newReportUrlInput = document.getElementById('new-report-url');
+            const addReportBtn = document.getElementById('add-report-btn');
+            const backToGroupsBtn = document.getElementById('back-to-groups-btn');
+
+            let editingGroupIndex = null;
+
+            // Renderizar sidebar
+            function renderSidebar() {
+                sidebarContentList.innerHTML = ''; // limpar para renderizar de novo
+                let html = "";
+                reportGroupsConfig.forEach((group, idx) => {
                     html += `
+                        <details class="nav-group" id="details-${group.groupId}" ${group.isOpenDefault ? 'open' : ''}>
+                            <summary class="nav-header">
+                                <div class="nav-icon"><i class="${group.groupIcon}"></i></div>
+                                <h3 class="nav-title">${group.groupName}</h3>
+                            </summary>
+                            <div class="nav-links">`;
+                    group.reports.forEach(report => {
+                        html += `
+                            <a href="#${report.id}" class="nav-link" data-report-id="${report.id}" data-report-url="${report.url}" data-report-title="${report.title}">
+                                <i class="${report.icon}"></i> ${report.title}
+                            </a>`;
+                    });
+                    html += `</div></details>`;
+                });
+                sidebarContentList.insertAdjacentHTML('afterbegin', html);
+                renderReportContainers();
+            }
+
+            // Renderizar containers dos reports (iframes)
+            function renderReportContainers() {
+                let html = "";
+                reportGroupsConfig.forEach(group => {
+                    group.reports.forEach(report => {
+                        html += `
                         <section id="${report.id}" class="report-container" data-title="${report.title}">
                             <div class="iframe-loader hidden"><div class="spinner"></div><div class="loading-text"></div></div>
                             <div class="report-message-area"></div>
                             <iframe title="Relatório ${report.title}" src="about:blank" allowfullscreen data-loaded="false"></iframe>
                         </section>`;
+                    });
                 });
-            });
-            reportDisplayArea.innerHTML = html;
-        }
-        
-        function showReport(reportId, reportUrl, reportTitle) {
-            const targetReportContainer = document.getElementById(reportId);
-            if (!targetReportContainer) return;
+                reportDisplayArea.innerHTML = html;
+            }
 
-            document.querySelectorAll('.report-container.active').forEach(rc => rc.classList.remove('active'));
-            targetReportContainer.classList.add('active');
-            activeReportContainer = targetReportContainer;
+            function showReport(reportId, reportUrl, reportTitle) {
+                const targetReportContainer = document.getElementById(reportId);
+                if (!targetReportContainer) return;
 
-            const iframe = targetReportContainer.querySelector('iframe');
-            const loader = targetReportContainer.querySelector('.iframe-loader');
-            const loadingTextEl = loader.querySelector('.loading-text');
-            const messageArea = targetReportContainer.querySelector('.report-message-area');
-            
-            messageArea.innerHTML = '';
-            messageArea.classList.add('hidden');
-            iframe.style.display = 'block'; // Make iframe visible for loading
+                document.querySelectorAll('.report-container.active').forEach(rc => rc.classList.remove('active'));
+                targetReportContainer.classList.add('active');
+                activeReportContainer = targetReportContainer;
 
-            if (iframe.dataset.loaded === 'false') {
-                if (reportUrl && reportUrl.trim() !== "" && reportUrl.trim() !== "about:blank") {
-                    loader.classList.remove('hidden');
-                    loadingTextEl.textContent = `Carregando ${reportTitle}...`;
-                    iframe.style.opacity = '0'; 
-                    setTimeout(() => { iframe.src = reportUrl; }, 50); // Brief delay before setting src
+                const iframe = targetReportContainer.querySelector('iframe');
+                const loader = targetReportContainer.querySelector('.iframe-loader');
+                const loadingTextEl = loader.querySelector('.loading-text');
+                const messageArea = targetReportContainer.querySelector('.report-message-area');
+
+                messageArea.innerHTML = '';
+                messageArea.classList.add('hidden');
+                iframe.style.display = 'block';
+
+                if (iframe.dataset.loaded === 'false') {
+                    if (reportUrl && reportUrl.trim() !== "") {
+                        loader.classList.remove('hidden');
+                        loadingTextEl.textContent = `Carregando ${reportTitle}...`;
+                        iframe.style.opacity = '0';
+                        setTimeout(() => {
+                            iframe.src = reportUrl;
+                        }, 50);
+                    } else {
+                        loader.classList.add('hidden');
+                        displayReportMessage(targetReportContainer, 'info', 'URL não configurada', `O relatório "${reportTitle}" não possui uma URL definida.`);
+                        iframe.style.display = 'none';
+                    }
                 } else {
                     loader.classList.add('hidden');
-                    displayReportMessage(targetReportContainer, 'info', 'URL não configurada', `O relatório "${reportTitle}" não possui uma URL definida.`);
-                    iframe.style.display = 'none';
+                    if (iframe.dataset.loaded === "true") {
+                        iframe.style.display = 'block';
+                        messageArea.classList.add('hidden');
+                    } else if (iframe.dataset.loaded === "error") {
+                        displayReportMessage(targetReportContainer, 'error', 'Falha ao Carregar', `Houve um problema ao carregar o relatório "${reportTitle}" anteriormente.`);
+                    }
                 }
-            } else { // Report was already loaded or attempted
-                loader.classList.add('hidden');
-                if (iframe.dataset.loaded === "true") {
-                    iframe.style.display = 'block';
-                    messageArea.classList.add('hidden');
-                } else if (iframe.dataset.loaded === "error") {
-                     displayReportMessage(targetReportContainer, 'error', 'Falha ao Carregar', `Houve um problema ao carregar o relatório "${reportTitle}" anteriormente.`);
-                } else if (!reportUrl || reportUrl.trim() === "" || reportUrl.trim() === "about:blank") { // If loaded was 'false' but no URL
-                    displayReportMessage(targetReportContainer, 'info', 'URL não configurada', `O relatório "${reportTitle}" não possui uma URL definida.`);
-                    iframe.style.display = 'none';
+                updateActiveReportBreadcrumb(reportTitle);
+            }
+
+            function displayReportMessage(container, type = 'info', title, text) {
+                const messageArea = container.querySelector('.report-message-area');
+                if (!messageArea) return;
+                let iconClass = 'fas fa-info-circle';
+                if (type === 'error') iconClass = 'fas fa-exclamation-triangle';
+                if (type === 'empty') iconClass = 'fas fa-folder-open';
+                messageArea.innerHTML = `
+                    <i class="${iconClass}"></i>
+                    <h3>${title}</h3>
+                    <p>${text || 'Por favor, verifique a configuração.'}</p>`;
+                messageArea.classList.remove('hidden');
+                container.querySelector('iframe').style.display = 'none';
+            }
+
+            function saveSidebarState() {
+                localStorage.setItem('sidebarOpen', sidebar.classList.contains('open'));
+            }
+
+            function loadSidebarState() {
+                const isOpen = localStorage.getItem('sidebarOpen') === 'true';
+                if (window.innerWidth > 992) {
+                    if (isOpen) sidebar.classList.add('open');
+                    else sidebar.classList.remove('open');
+                } else {
+                    sidebar.classList.remove('open');
                 }
-            }
-            updateActiveReportBreadcrumb(reportTitle);
-        }
-
-        function displayReportMessage(container, type = 'info', title, text) {
-            const messageArea = container.querySelector('.report-message-area');
-            if (!messageArea) return;
-            let iconClass = 'fas fa-info-circle';
-            if (type === 'error') iconClass = 'fas fa-exclamation-triangle';
-            if (type === 'empty') iconClass = 'fas fa-folder-open';
-            messageArea.innerHTML = `
-                <i class="${iconClass}"></i>
-                <h3>${title}</h3>
-                <p>${text || 'Por favor, verifique a configuração.'}</p>`;
-            messageArea.classList.remove('hidden');
-            container.querySelector('iframe').style.display = 'none'; // Hide iframe when message is shown
-        }
-
-        function saveSidebarState() { localStorage.setItem('sidebarOpen', sidebar.classList.contains('open')); }
-        function loadSidebarState() {
-            const isOpen = localStorage.getItem('sidebarOpen') === 'true';
-            if (window.innerWidth > 992) {
-                 if (isOpen) sidebar.classList.add('open'); else sidebar.classList.remove('open');
-            } else {
-                 sidebar.classList.remove('open'); // Default to closed on mobile
-            }
-            sidebarToggle.setAttribute('aria-expanded', sidebar.classList.contains('open'));
-        }
-        function saveDetailsState() {
-            document.querySelectorAll('.nav-group[id^="details-"]').forEach(details => {
-                localStorage.setItem(details.id + '_open', details.hasAttribute('open'));
-            });
-        }
-        function loadDetailsState() {
-            document.querySelectorAll('.nav-group[id^="details-"]').forEach(details => {
-                const storedState = localStorage.getItem(details.id + '_open');
-                if (storedState === 'true') details.setAttribute('open', '');
-                else if (storedState === 'false') details.removeAttribute('open');
-                // If null (new group), it will use its default from isOpenDefault in renderSidebar
-            });
-        }
-        
-        function initSidebarToggle() {
-            sidebarToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('open');
-                saveSidebarState();
                 sidebarToggle.setAttribute('aria-expanded', sidebar.classList.contains('open'));
-            });
-            document.addEventListener('click', (event) => {
-                if (window.innerWidth <= 992 && sidebar.classList.contains('open')) {
-                    if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
-                        sidebar.classList.remove('open');
-                        saveSidebarState();
-                        sidebarToggle.setAttribute('aria-expanded', 'false');
-                    }
-                }
-            });
-        }
+            }
 
-        function initReportNavigation() {
-            sidebarContentList.addEventListener('click', (e) => {
-                const link = e.target.closest('.nav-link');
-                if (link) {
-                    e.preventDefault();
-                    document.querySelectorAll('.nav-link.active').forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
-                    
-                    const reportId = link.dataset.reportId;
-                    const reportUrl = link.dataset.reportUrl;
-                    const reportTitle = link.dataset.reportTitle;
+            function saveDetailsState() {
+                document.querySelectorAll('.nav-group[id^="details-"]').forEach(details => {
+                    localStorage.setItem(details.id + '_open', details.hasAttribute('open'));
+                });
+            }
 
-                    showReport(reportId, reportUrl, reportTitle);
-                    window.location.hash = reportId;
+            function loadDetailsState() {
+                document.querySelectorAll('.nav-group[id^="details-"]').forEach(details => {
+                    const storedState = localStorage.getItem(details.id + '_open');
+                    if (storedState === 'true') details.setAttribute('open', '');
+                    else if (storedState === 'false') details.removeAttribute('open');
+                });
+            }
 
+            function initSidebarToggle() {
+                sidebarToggle.addEventListener('click', () => {
+                    sidebar.classList.toggle('open');
+                    saveSidebarState();
+                    sidebarToggle.setAttribute('aria-expanded', sidebar.classList.contains('open'));
+                });
+                document.addEventListener('click', (event) => {
                     if (window.innerWidth <= 992 && sidebar.classList.contains('open')) {
-                        sidebar.classList.remove('open');
-                        saveSidebarState();
-                        sidebarToggle.setAttribute('aria-expanded', 'false');
+                        if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                            sidebar.classList.remove('open');
+                            saveSidebarState();
+                            sidebarToggle.setAttribute('aria-expanded', 'false');
+                        }
                     }
-                }
-            });
+                });
+            }
 
-            reportDisplayArea.addEventListener('load', (e) => {
-                if (e.target.tagName === 'IFRAME') {
-                    const iframe = e.target;
-                    iframe.dataset.loaded = 'true';
-                    iframe.style.opacity = '1'; 
-                    const parentContainer = iframe.closest('.report-container');
-                    if (parentContainer) {
-                        parentContainer.querySelector('.iframe-loader').classList.add('hidden');
-                        iframe.classList.add('loaded');
-                        parentContainer.querySelector('.report-message-area').classList.add('hidden');
+            function initReportNavigation() {
+                sidebarContentList.addEventListener('click', (e) => {
+                    const link = e.target.closest('.nav-link');
+                    if (link) {
+                        e.preventDefault();
+                        document.querySelectorAll('.nav-link.active').forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+
+                        const reportId = link.dataset.reportId;
+                        const reportUrl = link.dataset.reportUrl;
+                        const reportTitle = link.dataset.reportTitle;
+
+                        showReport(reportId, reportUrl, reportTitle);
+                        window.location.hash = reportId;
+
+                        if (window.innerWidth <= 992 && sidebar.classList.contains('open')) {
+                            sidebar.classList.remove('open');
+                            saveSidebarState();
+                            sidebarToggle.setAttribute('aria-expanded', 'false');
+                        }
                     }
-                }
-            }, true);
+                });
 
-            reportDisplayArea.addEventListener('error', (e) => {
-                 if (e.target.tagName === 'IFRAME') {
-                    const iframe = e.target;
-                    iframe.dataset.loaded = 'error';
-                    iframe.style.opacity = '1'; // Show the (potentially blank) iframe or error page
-                    const parentContainer = iframe.closest('.report-container');
-                    console.error('Falha ao carregar iframe src: ', iframe.src);
-                    if (parentContainer) {
-                        parentContainer.querySelector('.iframe-loader').classList.add('hidden');
-                        displayReportMessage(parentContainer, 'error', 'Falha ao Carregar', `O relatório "${parentContainer.dataset.title}" não pôde ser carregado. Verifique a URL e as permissões.`);
+                reportDisplayArea.addEventListener('load', (e) => {
+                    if (e.target.tagName === 'IFRAME') {
+                        const iframe = e.target;
+                        iframe.dataset.loaded = 'true';
+                        iframe.style.opacity = '1';
+                        const parentContainer = iframe.closest('.report-container');
+                        if (parentContainer) {
+                            parentContainer.querySelector('.iframe-loader').classList.add('hidden');
+                            iframe.classList.add('loaded');
+                            parentContainer.querySelector('.report-message-area').classList.add('hidden');
+                        }
                     }
-                }
-            }, true);
-        }
-        
-        function debounce(func, delay) {
-            let timeout;
-            return function(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), delay);
-            };
-        }
+                }, true);
 
-        function initSearchFilter() {
-            searchInput.addEventListener('input', debounce(function(e) {
-                const searchTerm = e.target.value.toLowerCase().trim();
-                let hasResults = false;
-                document.querySelectorAll('.nav-group').forEach(group => {
-                    let groupHasVisibleLink = false;
-                    const groupTitle = group.querySelector('.nav-title').textContent.toLowerCase();
-                    
-                    group.querySelectorAll('.nav-link').forEach(link => {
-                        const linkText = link.textContent.toLowerCase();
-                        if (linkText.includes(searchTerm) || groupTitle.includes(searchTerm)) {
-                            link.classList.remove('hidden');
-                            groupHasVisibleLink = true;
-                            hasResults = true;
+                reportDisplayArea.addEventListener('error', (e) => {
+                    if (e.target.tagName === 'IFRAME') {
+                        const iframe = e.target;
+                        iframe.dataset.loaded = 'error';
+                        iframe.style.opacity = '1';
+                        const parentContainer = iframe.closest('.report-container');
+                        console.error('Falha ao carregar iframe src: ', iframe.src);
+                        if (parentContainer) {
+                            parentContainer.querySelector('.iframe-loader').classList.add('hidden');
+                            displayReportMessage(parentContainer, 'error', 'Falha ao Carregar', `O relatório "${parentContainer.dataset.title}" não pôde ser carregado.`);
+                        }
+                    }
+                }, true);
+            }
+
+            function debounce(func, delay) {
+                let timeout;
+                return function (...args) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(this, args), delay);
+                };
+            }
+
+            function initSearchFilter() {
+                searchInput.addEventListener('input', debounce(function (e) {
+                    const searchTerm = e.target.value.toLowerCase().trim();
+                    let hasResults = false;
+                    document.querySelectorAll('.nav-group').forEach(group => {
+                        let groupHasVisibleLink = false;
+                        group.querySelectorAll('.nav-link').forEach(link => {
+                            const linkText = link.textContent.toLowerCase();
+                            if (linkText.includes(searchTerm)) {
+                                link.classList.remove('hidden');
+                                groupHasVisibleLink = true;
+                                hasResults = true;
+                            } else {
+                                link.classList.add('hidden');
+                            }
+                        });
+                        const groupTitle = group.querySelector('.nav-title').textContent.toLowerCase();
+                        if (groupHasVisibleLink || (searchTerm && groupTitle.includes(searchTerm))) {
+                            group.classList.remove('hidden');
                         } else {
-                            link.classList.add('hidden');
+                            group.classList.add('hidden');
                         }
                     });
+                    noResultsMessage.classList.toggle('hidden', hasResults || searchTerm.length === 0);
+                }, 250));
+            }
 
-                    if (groupHasVisibleLink || (searchTerm && groupTitle.includes(searchTerm))) {
-                        group.classList.remove('hidden');
-                        // If searching, open the details to show matches
-                        if (searchTerm && !group.hasAttribute('open')) {
-                           // group.setAttribute('open', ''); // Might be too aggressive, user might close it intentionally
-                        }
-                    } else {
-                        group.classList.add('hidden');
+            function initFullscreen() {
+                fullscreenToggle.addEventListener('click', () => {
+                    if (!activeReportContainer) return;
+                    const isCurrentlyFullscreen = dashboardWrapper.classList.contains('report-fullscreen');
+                    dashboardWrapper.classList.toggle('report-fullscreen', !isCurrentlyFullscreen);
+                    activeReportContainer.classList.toggle('fullscreen', !isCurrentlyFullscreen);
+                    fullscreenToggle.innerHTML = !isCurrentlyFullscreen ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>';
+                    fullscreenToggle.setAttribute('aria-label', !isCurrentlyFullscreen ? 'Sair da tela cheia' : 'Tela cheia');
+                });
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape' && dashboardWrapper.classList.contains('report-fullscreen')) {
+                        dashboardWrapper.classList.remove('report-fullscreen');
+                        if (activeReportContainer) activeReportContainer.classList.remove('fullscreen');
+                        fullscreenToggle.innerHTML = '<i class="fas fa-expand"></i>';
+                        fullscreenToggle.setAttribute('aria-label', 'Tela cheia');
                     }
                 });
-                noResultsMessage.classList.toggle('hidden', hasResults || searchTerm.length === 0);
-            }, 250));
-        }
+            }
 
-        function initFullscreen() {
-            fullscreenToggle.addEventListener('click', () => {
-                if (!activeReportContainer) return;
-                const isCurrentlyFullscreen = dashboardWrapper.classList.contains('report-fullscreen');
-                dashboardWrapper.classList.toggle('report-fullscreen', !isCurrentlyFullscreen);
-                activeReportContainer.classList.toggle('fullscreen', !isCurrentlyFullscreen);
-                fullscreenToggle.innerHTML = !isCurrentlyFullscreen ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>';
-                fullscreenToggle.setAttribute('aria-label', !isCurrentlyFullscreen ? 'Sair da tela cheia' : 'Tela cheia');
-            });
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'Escape' && dashboardWrapper.classList.contains('report-fullscreen')) {
-                    dashboardWrapper.classList.remove('report-fullscreen');
-                    if(activeReportContainer) activeReportContainer.classList.remove('fullscreen');
-                    fullscreenToggle.innerHTML = '<i class="fas fa-expand"></i>';
-                    fullscreenToggle.setAttribute('aria-label', 'Tela cheia');
-                }
-            });
-        }
-
-        function initDeepLinking() {
-            function activateReportFromHash() {
-                let reportToLoad = false;
-                if (window.location.hash) {
-                    const reportIdFromHash = window.location.hash.substring(1);
-                    const linkToActivate = document.querySelector(`.nav-link[data-report-id="${reportIdFromHash}"]`);
-                    if (linkToActivate) {
-                        const parentDetails = linkToActivate.closest('details.nav-group');
-                        if (parentDetails && !parentDetails.hasAttribute('open')) {
-                            parentDetails.setAttribute('open', '');
+            function initDeepLinking() {
+                function activateReportFromHash() {
+                    let reportToLoad = false;
+                    if (window.location.hash) {
+                        const reportIdFromHash = window.location.hash.substring(1);
+                        const linkToActivate = document.querySelector(`.nav-link[data-report-id="${reportIdFromHash}"]`);
+                        if (linkToActivate) {
+                            const parentDetails = linkToActivate.closest('details.nav-group');
+                            if (parentDetails && !parentDetails.hasAttribute('open')) {
+                                parentDetails.setAttribute('open', '');
+                            }
+                            linkToActivate.click();
+                            reportToLoad = true;
                         }
-                        linkToActivate.click();
-                        reportToLoad = true;
+                    }
+                    if (!reportToLoad) {
+                        displayInitialMessage();
                     }
                 }
-                if (!reportToLoad) {
-                    displayInitialMessage();
+                window.addEventListener('hashchange', activateReportFromHash);
+                activateReportFromHash();
+            }
+
+            function displayInitialMessage() {
+                const firstReportContainer = reportDisplayArea.querySelector('.report-container');
+                if (firstReportContainer && !document.querySelector('.report-container.active')) {
+                    firstReportContainer.classList.add('active');
+                    activeReportContainer = firstReportContainer;
+                    displayReportMessage(
+                        firstReportContainer,
+                        'empty',
+                        'Bem-vindo(a)!',
+                        'Selecione um relatório no menu lateral para começar a explorar os dados.'
+                    );
+                    updateActiveReportBreadcrumb('Nenhum relatório selecionado');
                 }
             }
-            window.addEventListener('hashchange', activateReportFromHash);
-            activateReportFromHash(); // Call on initial load
-        }
-        
-        function displayInitialMessage() {
-            // Check if any report is already active from deep linking
-            if (document.querySelector('.report-container.active')) {
-                return;
+
+            function updateActiveReportBreadcrumb(title) {
+                currentReportBreadcrumb.textContent = title || 'Nenhum relatório selecionado';
             }
 
-            const firstReportContainer = reportDisplayArea.querySelector('.report-container');
-            if (firstReportContainer) { // Only if there are reports defined
-                firstReportContainer.classList.add('active'); // Make it active to show message IN it
-                activeReportContainer = firstReportContainer;
-                displayReportMessage(firstReportContainer, 'empty', 'Bem-vindo(a)!', 'Selecione um relatório no menu lateral para começar a explorar os dados.');
-                updateActiveReportBreadcrumb('Nenhum relatório selecionado');
-            } else { // No reports configured at all
-                 reportDisplayArea.innerHTML = `<div class="report-message-area" style="opacity:1; visibility:visible; position: static;">
-                    <i class="fas fa-info-circle"></i>
-                    <h3>Nenhum relatório configurado</h3>
-                    <p>Use Ctrl+F12 para adicionar relatórios.</p>
-                </div>`;
-                updateActiveReportBreadcrumb('Nenhum relatório configurado');
-            }
-        }
-
-        function updateActiveReportBreadcrumb(title) {
-            currentReportBreadcrumb.textContent = title || 'Nenhum relatório selecionado';
-        }
-
-        // --- Admin Modal Functions ---
-        function populateExistingGroupsForModal() {
-            existingGroupNameSelect.innerHTML = ''; // Clear previous options
-            if (reportGroupsConfig.length === 0) {
-                const option = document.createElement('option');
-                option.textContent = "Nenhum grupo existente";
-                option.disabled = true;
-                existingGroupNameSelect.appendChild(option);
-            } else {
-                reportGroupsConfig.forEach(group => {
-                    const option = document.createElement('option');
-                    option.value = group.groupId;
-                    option.textContent = group.groupName;
-                    existingGroupNameSelect.appendChild(option);
+            // ==================== Funções do Modal Edição ====================
+            // Renderiza lista dos grupos no modal
+            function renderGroupList() {
+                groupListEl.innerHTML = '';
+                reportGroupsConfig.forEach((group, idx) => {
+                    const div = document.createElement('div');
+                    div.classList.add('item');
+                    div.innerHTML = `
+                        <div class="item-info">
+                            <span class="icon-preview"><i class="${group.groupIcon}"></i></span>
+                            <strong>${group.groupName}</strong>
+                        </div>
+                        <div>
+                            <button class="btn" data-action="edit" data-index="${idx}">Editar</button>
+                            <button class="btn btn-danger" data-action="delete" data-index="${idx}">Excluir</button>
+                            <button class="btn" data-action="view-reports" data-index="${idx}">Relatórios</button>
+                        </div>
+                    `;
+                    groupListEl.appendChild(div);
                 });
             }
-        }
 
-        function openAdminModal() {
-            adminForm.reset(); 
-            populateExistingGroupsForModal();
-            groupTypeSelect.value = reportGroupsConfig.length > 0 ? 'existing' : 'new'; // Default based on groups
-            
-            if (groupTypeSelect.value === 'new' || reportGroupsConfig.length === 0) {
-                newGroupSection.style.display = 'block';
-                existingGroupSection.style.display = 'none';
-                newGroupNameInput.required = true;
-                existingGroupNameSelect.required = false;
-            } else {
-                newGroupSection.style.display = 'none';
-                existingGroupSection.style.display = 'block';
-                newGroupNameInput.required = false;
-                existingGroupNameSelect.required = true;
-            }
-            adminModal.style.display = 'flex';
-            setTimeout(() => adminModal.classList.add('visible'), 10); // Allow display change before transition
-            newGroupNameInput.focus(); // Focus first field
-        }
-
-        function closeAdminModal() {
-            adminModal.classList.remove('visible');
-            setTimeout(() => {
-                 adminModal.style.display = 'none';
-            }, 300); 
-        }
-
-        groupTypeSelect.addEventListener('change', () => {
-            if (groupTypeSelect.value === 'new') {
-                newGroupSection.style.display = 'block';
-                existingGroupSection.style.display = 'none';
-                newGroupNameInput.required = true;
-                existingGroupNameSelect.required = false;
-            } else { // 'existing'
-                if (reportGroupsConfig.length === 0) {
-                    alert("Não há grupos existentes para selecionar. Por favor, crie um novo grupo primeiro.");
-                    groupTypeSelect.value = 'new'; // Switch back
-                    newGroupSection.style.display = 'block';
-                    existingGroupSection.style.display = 'none';
-                    newGroupNameInput.required = true;
-                    existingGroupNameSelect.required = false;
-                    return;
-                }
-                newGroupSection.style.display = 'none';
-                existingGroupSection.style.display = 'block';
-                newGroupNameInput.required = false;
-                existingGroupNameSelect.required = true;
-            }
-        });
-
-        document.addEventListener('keydown', (event) => {
-            if (event.ctrlKey && event.key === 'F12') {
-                event.preventDefault();
-                openAdminModal();
-            }
-            if (event.key === 'Escape' && adminModal.classList.contains('visible')) {
-                closeAdminModal();
-            }
-        });
-
-        cancelAdminModalButton.addEventListener('click', closeAdminModal);
-        adminModal.addEventListener('click', (event) => { // Close on overlay click
-            if (event.target === adminModal) {
-                closeAdminModal();
-            }
-        });
-        
-        function generateSafeId(name) {
-            if (!name || typeof name !== 'string') return `id-${Date.now()}`;
-            return name.trim().toLowerCase()
-                       .replace(/\s+/g, '-') // Replace spaces with hyphens
-                       .replace(/[^\w-]+/g, '') // Remove all non-word chars except hyphen
-                       .replace(/--+/g, '-'); // Replace multiple hyphens with single
-        }
-
-        adminForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            const reportTitle = reportNameInput.value.trim();
-            const reportIcon = reportIconInput.value.trim() || 'fas fa-file-alt';
-            const reportUrl = reportUrlInput.value.trim();
-            let reportId = generateSafeId(reportTitle);
-
-            if (!reportTitle || !reportUrl) {
-                alert("Nome do relatório e URL são obrigatórios.");
-                return;
-            }
-            if (!reportId) {
-                alert("O nome do relatório é inválido ou resultou em um ID vazio. Tente um nome diferente.");
-                return;
-            }
-            
-            let targetGroup;
-            let isNewGroup = false;
-
-            if (groupTypeSelect.value === 'new') {
-                const newGroupName = newGroupNameInput.value.trim();
-                const newGroupIcon = newGroupIconInput.value.trim() || 'fas fa-folder';
-                let newGroupId = generateSafeId(newGroupName);
-
-                if (!newGroupName) {
-                    alert("Nome do novo grupo é obrigatório.");
-                    return;
-                }
-                if (!newGroupId) {
-                     alert("O nome do novo grupo é inválido ou resultou em um ID vazio. Tente um nome diferente.");
-                     return;
-                }
-                if (reportGroupsConfig.find(g => g.groupId === newGroupId || g.groupName.toLowerCase() === newGroupName.toLowerCase())) {
-                    alert("Um grupo com este nome ou ID já existe. Escolha um nome diferente para o grupo.");
-                    return;
-                }
-                targetGroup = {
-                    groupId: newGroupId,
-                    groupName: newGroupName,
-                    groupIcon: newGroupIcon,
-                    isOpenDefault: true, // New groups open by default
-                    reports: []
-                };
-                isNewGroup = true;
-            } else {
-                const existingGroupId = existingGroupNameSelect.value;
-                targetGroup = reportGroupsConfig.find(g => g.groupId === existingGroupId);
-                if (!targetGroup) {
-                    alert("Grupo existente selecionado não foi encontrado! Isso não deveria acontecer.");
-                    return;
-                }
-            }
-            
-            // Ensure reportId is unique globally or at least within the group
-            let originalReportId = reportId;
-            let counter = 1;
-            while (reportGroupsConfig.some(g => g.reports.some(r => r.id === reportId))) {
-                reportId = `${originalReportId}-${counter}`;
-                counter++;
-            }
-            if (reportId !== originalReportId) {
-                console.warn(`ID do relatório "${originalReportId}" já existia. Renomeado para "${reportId}".`);
+            // Renderiza lista dos relatórios de um grupo
+            function renderReportList(groupIndex) {
+                reportListEl.innerHTML = '';
+                const group = reportGroupsConfig[groupIndex];
+                if (!group) return;
+                group.reports.forEach((report, idx) => {
+                    const div = document.createElement('div');
+                    div.classList.add('item', 'report-item');
+                    div.innerHTML = `
+                        <span class="icon-preview"><i class="${report.icon}"></i></span>
+                        <span>${report.title}</span>
+                        <div>
+                            <button class="btn" data-action="edit" data-index="${idx}">Editar</button>
+                            <button class="btn btn-danger" data-action="delete" data-index="${idx}">Excluir</button>
+                        </div>
+                    `;
+                    reportListEl.appendChild(div);
+                });
             }
 
-
-            const newReport = {
-                id: reportId,
-                title: reportTitle,
-                icon: reportIcon,
-                url: reportUrl
-            };
-
-            targetGroup.reports.push(newReport);
-            if (isNewGroup) {
-                reportGroupsConfig.push(targetGroup);
+            // Abre modal edição de grupos
+            function openGroupsEdit() {
+                editingGroupIndex = null;
+                reportsGroupNameEl.textContent = '';
+                reportSection.classList.add('hidden');
+                groupsSection.classList.remove('hidden');
+                renderGroupList();
+                editModal.classList.add('active');
+                newGroupNameInput.value = '';
+                newGroupIconInput.value = '';
             }
 
-            // --- Persist reportGroupsConfig to localStorage ---
-            try {
+            // Abre modal edição de relatórios para um grupo
+            function openReportsEdit(groupIndex) {
+                editingGroupIndex = groupIndex;
+                reportsGroupNameEl.textContent = reportGroupsConfig[groupIndex].groupName;
+                groupsSection.classList.add('hidden');
+                reportSection.classList.remove('hidden');
+                renderReportList(groupIndex);
+                newReportTitleInput.value = '';
+                newReportIconInput.value = '';
+                newReportUrlInput.value = '';
+            }
+
+            // Fecha modal
+            function closeModal() {
+                editModal.classList.remove('active');
+                editingGroupIndex = null;
+            }
+
+            // Salvar alterações no localStorage e atualizar sidebar
+            function saveChanges() {
                 localStorage.setItem('reportGroupsConfig', JSON.stringify(reportGroupsConfig));
-                console.log("Configuração de relatórios salva no localStorage.");
-            } catch (e) {
-                console.error("Erro ao salvar configuração no localStorage:", e);
+                renderSidebar();
+                saveDetailsState();
+                closeModal();
             }
-            // --- End Persistence ---
 
-            renderSidebar(); 
-            loadDetailsState(); 
-            initSearchFilter(); 
-
-            alert(`Relatório "${reportTitle}" adicionado com sucesso ao grupo "${targetGroup.groupName}"!`);
-            closeAdminModal();
-            
-            // Optionally, activate the new report or clear selection
-            const newLink = sidebarContentList.querySelector(`.nav-link[data-report-id="${newReport.id}"]`);
-            if (newLink) {
-                newLink.click(); // Activate the newly added report
-                const parentDetails = newLink.closest('details.nav-group');
-                if (parentDetails && !parentDetails.hasAttribute('open')) {
-                    parentDetails.setAttribute('open', '');
-                }
-            } else {
-                 // Fallback if not found or something went wrong
-                document.querySelectorAll('.nav-link.active').forEach(l => l.classList.remove('active'));
-                updateActiveReportBreadcrumb('Selecione um relatório');
-                if (activeReportContainer) {
-                     activeReportContainer.classList.remove('active');
-                     activeReportContainer = null;
-                }
-                displayInitialMessage();
+            // Gerar ID único para relatórios novos (base simples)
+            function generateReportId(title) {
+                return title
+                    .toLowerCase()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^a-z0-9\-]/g, '') + '-' + Date.now();
             }
-        });
-        
-        // --- Function to load reportGroupsConfig from localStorage ---
-        function loadReportGroupsConfig() {
-            const storedConfig = localStorage.getItem('reportGroupsConfig');
-            if (storedConfig) {
-                try {
-                    const parsedConfig = JSON.parse(storedConfig);
-                    if (Array.isArray(parsedConfig)) { // Basic validation
-                        reportGroupsConfig = parsedConfig;
-                        console.log("Configuração de relatórios carregada do localStorage.");
+
+            // Eventos dentro do modal grupos
+            groupListEl.addEventListener('click', (e) => {
+                const btn = e.target.closest('button');
+                if (!btn) return;
+                const action = btn.dataset.action;
+                const index = Number(btn.dataset.index);
+                if (action === 'edit') {
+                    // Editar grupo - preenche inputs para edição
+                    const group = reportGroupsConfig[index];
+                    newGroupNameInput.value = group.groupName;
+                    newGroupIconInput.value = group.groupIcon;
+                    editingGroupIndex = index;
+                } else if (action === 'delete') {
+                    if (confirm(`Deseja excluir o grupo "${reportGroupsConfig[index].groupName}"? Essa ação é irreversível.`)) {
+                        reportGroupsConfig.splice(index, 1);
+                        renderGroupList();
                     }
-                } catch (e) {
-                    console.error("Erro ao carregar/parsear configuração do localStorage:", e, "Usando configuração padrão.");
-                    // Fallback to default if parsing fails or data is invalid
+                } else if (action === 'view-reports') {
+                    openReportsEdit(index);
                 }
-            }
-        }
+            });
 
+            addGroupBtn.addEventListener('click', () => {
+                const name = newGroupNameInput.value.trim();
+                const icon = newGroupIconInput.value.trim() || 'fas fa-folder';
+                if (!name) {
+                    alert('Informe o nome do grupo');
+                    return;
+                }
+                if (editingGroupIndex !== null) {
+                    // Edita grupo existente
+                    reportGroupsConfig[editingGroupIndex].groupName = name;
+                    reportGroupsConfig[editingGroupIndex].groupIcon = icon;
+                    editingGroupIndex = null;
+                } else {
+                    // Adiciona grupo novo
+                    // Gera um ID único simples para grupo
+                    const newId = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') + '-' + Date.now();
+                    reportGroupsConfig.push({
+                        groupId: newId,
+                        groupName: name,
+                        groupIcon: icon,
+                        isOpenDefault: false,
+                        reports: [],
+                    });
+                }
+                newGroupNameInput.value = '';
+                newGroupIconInput.value = '';
+                renderGroupList();
+            });
 
-        // Initial calls
-        loadReportGroupsConfig(); // Load config from localStorage first
-        renderSidebar();
-        loadSidebarState();
-        loadDetailsState();
-        initSidebarToggle();
-        initReportNavigation();
-        initSearchFilter();
-        initFullscreen();
-        initDeepLinking(); // This will also call displayInitialMessage if no hash
+            // Eventos dentro do modal relatórios
+            reportListEl.addEventListener('click', (e) => {
+                const btn = e.target.closest('button');
+                if (!btn) return;
+                const action = btn.dataset.action;
+                const index = Number(btn.dataset.index);
+                if (action === 'edit') {
+                    // Edita relatório - preenche inputs
+                    const report = reportGroupsConfig[editingGroupIndex].reports[index];
+                    newReportTitleInput.value = report.title;
+                    newReportIconInput.value = report.icon;
+                    newReportUrlInput.value = report.url;
+                    addReportBtn.dataset.editIndex = index;
+                } else if (action === 'delete') {
+                    if (confirm(`Deseja excluir o relatório "${reportGroupsConfig[editingGroupIndex].reports[index].title}"?`)) {
+                        reportGroupsConfig[editingGroupIndex].reports.splice(index, 1);
+                        renderReportList(editingGroupIndex);
+                        addReportBtn.removeAttribute('data-edit-index');
+                    }
+                }
+            });
 
-        sidebarContentList.addEventListener('toggle', (e) => {
-            if (e.target.tagName === 'DETAILS') { saveDetailsState(); }
-        }, true);
-    });
+            addReportBtn.addEventListener('click', () => {
+                const title = newReportTitleInput.value.trim();
+                const icon = newReportIconInput.value.trim() || 'fas fa-file';
+                const url = newReportUrlInput.value.trim();
+
+                if (!title) {
+                    alert('Informe o título do relatório');
+                    return;
+                }
+
+                if (editingGroupIndex === null) {
+                    alert('Nenhum grupo selecionado para adicionar o relatório');
+                    return;
+                }
+
+                const group = reportGroupsConfig[editingGroupIndex];
+
+                if (addReportBtn.hasAttribute('data-edit-index')) {
+                    // Edita relatório existente
+                    const idx = Number(addReportBtn.dataset.editIndex);
+                    group.reports[idx].title = title;
+                    group.reports[idx].icon = icon;
+                    group.reports[idx].url = url;
+                    addReportBtn.removeAttribute('data-edit-index');
+                } else {
+                    // Adiciona novo relatório
+                    group.reports.push({
+                        id: generateReportId(title),
+                        title,
+                        icon,
+                        url,
+                    });
+                }
+                newReportTitleInput.value = '';
+                newReportIconInput.value = '';
+                newReportUrlInput.value = '';
+                renderReportList(editingGroupIndex);
+            });
+
+            backToGroupsBtn.addEventListener('click', () => {
+                openGroupsEdit();
+            });
+
+            closeModalBtn.addEventListener('click', closeModal);
+
+            // Fecha modal clicando fora do conteúdo
+            editModal.addEventListener('click', (e) => {
+                if (e.target === editModal) {
+                    closeModal();
+                }
+            });
+
+            // Abre modal com Ctrl + F12
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'F12') {
+                    e.preventDefault();
+                    openGroupsEdit();
+                }
+            });
+
+            // Salvar alterações no localStorage e atualizar sidebar ao clicar em salvar modal
+            document.getElementById('save-changes-btn').addEventListener('click', () => {
+                saveChanges();
+            });
+
+            // Inicia funções básicas existentes
+            renderSidebar();
+            loadSidebarState();
+            loadDetailsState();
+
+            initSidebarToggle();
+            initReportNavigation();
+            initSearchFilter();
+            initFullscreen();
+            initDeepLinking();
+
+            sidebarContentList.addEventListener('toggle', (e) => {
+                if (e.target.tagName === 'DETAILS') {
+                    saveDetailsState();
+                }
+            }, true);
+
+        });
     </script>
 
     <script type="module">
-        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
         Chatbot.init({
             chatflowid: "4f70393d-a57f-4d56-835f-0e6f6156ce6e",
             apiHost: "https://cloud.flowiseai.com",
-        })
+        });
     </script>
 </body>
 </html>
