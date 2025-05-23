@@ -22,14 +22,10 @@ jobs:
         with:
           node-version: '20' # Pode usar uma versão LTS mais recente
 
-      - name: Atualizar index.html
+      - name: Atualizar index.html  # <--- MUDANÇA AQUI (nome do passo, opcional)
         run: |
           # Ler o conteúdo do JSON de configuração
           CONFIG_JSON=$(cat _data/nova_configuracao_padrao.json)
-
-          # Escapar caracteres especiais para sed e garantir que é uma linha única para substituição
-          # Esta é uma simplificação; JSONs complexos podem precisar de tratamento mais robusto
-          # Para JavaScript, o JSON geralmente não precisa de escape se for bem formado.
 
           # Criar um script Node.js para fazer a substituição de forma mais segura
           cat << EOF > update_script.js
@@ -37,7 +33,7 @@ jobs:
           const path = require('path');
 
           const configFile = path.join('_data', 'nova_configuracao_padrao.json');
-          const dashboardFile = 'index.html'; // Certifique-se que este é o caminho correto
+          const targetHtmlFile = 'index.html'; // <--- MUDANÇA AQUI: Alvo é index.html
 
           // Ler a nova configuração JSON
           let newConfigJsonString;
@@ -51,34 +47,35 @@ jobs:
           }
 
           // Ler o index.html
-          let dashboardContent;
+          let htmlContent;
           try {
-            dashboardContent = fs.readFileSync(dashboardFile, 'utf8');
+            htmlContent = fs.readFileSync(targetHtmlFile, 'utf8');
           } catch (error) {
-            console.error('Erro ao ler o arquivo index.html:', error);
+            console.error('Erro ao ler o arquivo index.html:', error); // <--- MUDANÇA AQUI
             process.exit(1);
           }
 
           // Encontrar e substituir a declaração de defaultReportGroupsConfig
           // ATENÇÃO: Esta regex é crucial e pode precisar de ajustes
+          // Assumindo que a declaração da variável é a mesma em index.html
           const regex = /const defaultReportGroupsConfig\s*=\s*(\[[\s\S]*?\]);/gm;
-
-          if (!regex.test(dashboardContent)) {
-            console.error('Não foi possível encontrar a declaração de defaultReportGroupsConfig no index.html. Verifique a regex.');
+          
+          if (!regex.test(htmlContent)) {
+            console.error('Não foi possível encontrar a declaração de defaultReportGroupsConfig no index.html. Verifique a regex e o arquivo.'); // <--- MUDANÇA AQUI
             process.exit(1);
           }
 
-          const updatedDashboardContent = dashboardContent.replace(
+          const updatedHtmlContent = htmlContent.replace(
             regex,
             \`const defaultReportGroupsConfig = \${newConfigJsonString};\`
           );
 
           // Salvar o arquivo index.html modificado
           try {
-            fs.writeFileSync(dashboardFile, updatedDashboardContent, 'utf8');
-            console.log('index.html atualizado com sucesso.');
+            fs.writeFileSync(targetHtmlFile, updatedHtmlContent, 'utf8');
+            console.log('index.html atualizado com sucesso.'); // <--- MUDANÇA AQUI
           } catch (error) {
-            console.error('Erro ao salvar o index.html modificado:', error);
+            console.error('Erro ao salvar o index.html modificado:', error); // <--- MUDANÇA AQUI
             process.exit(1);
           }
           EOF
@@ -89,11 +86,11 @@ jobs:
         run: |
           git config --global user.name 'GitHub Action Bot'
           git config --global user.email 'action-bot@github.com'
-          git add index.html # Adiciona apenas o arquivo que foi modificado
+          git add index.html # <--- MUDANÇA AQUI: Adiciona index.html
           # Verifica se há algo para commitar
           if ! git diff --staged --quiet; then
-            git commit -m "CHORE: Atualiza defaultReportGroupsConfig a partir de _data/nova_configuracao_padrao.json"
+            git commit -m "CHORE: Atualiza defaultReportGroupsConfig no index.html a partir de _data/nova_configuracao_padrao.json" # <--- MUDANÇA AQUI (mensagem do commit)
             git push
           else
-            echo "Nenhuma alteração para commitar em index.html."
+            echo "Nenhuma alteração para commitar em index.html." # <--- MUDANÇA AQUI
           fi
