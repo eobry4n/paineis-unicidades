@@ -8,7 +8,7 @@
       {
         "id": "a-bordo",
         "title": "A Bordo",
-        "icon": "fas fa-rocket-launch",
+        "icon": "fas fa-rocket",
         "url": "https://app.powerbi.com/reportEmbed?reportId=b2354559-4f5e-4865-a030-4ca26981cefc&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d"
       },
       {
@@ -36,10 +36,10 @@
         "url": ""
       },
       {
-        "id": "wsdsads-1748029767166",
-        "title": "wsdsads",
+        "id": "cartes-1748031655007",
+        "title": "Cartões",
         "icon": "fas fa-file",
-        "url": "sdsa"
+        "url": "https://eobry4n.github.io/paineis-unicidades/"
       }
     ]
   },
