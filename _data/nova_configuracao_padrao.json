@@ -1,15 +1,99 @@
 [
   {
-    "groupId": "exemplo_inicial",
-    "groupName": "Grupo de Exemplo Inicial",
-    "groupIcon": "fas fa-star",
+    "groupId": "negocios",
+    "groupName": "Negócios",
+    "groupIcon": "fas fa-briefcase",
     "isOpenDefault": true,
     "reports": [
       {
-        "id": "exemplo-relatorio-inicial",
-        "title": "Relatório de Exemplo Inicial",
-        "icon": "fas fa-file-alt",
-        "url": "https://example.com/report"
+        "id": "a-bordo",
+        "title": "A Bordo",
+        "icon": "fas fa-rocket-launch",
+        "url": "https://app.powerbi.com/reportEmbed?reportId=b2354559-4f5e-4865-a030-4ca26981cefc&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d"
+      },
+      {
+        "id": "consorcios",
+        "title": "Consórcios",
+        "icon": "fas fa-handshake",
+        "url": "https://app.powerbi.com/reportEmbed?reportId=3838bf32-d4ac-4a3b-a257-6a5e8b0a49a3&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d"
+      },
+      {
+        "id": "sipag",
+        "title": "Sipag",
+        "icon": "fas fa-credit-card",
+        "url": "https://app.powerbi.com/reportEmbed?reportId=6c3de2d2-b42f-42f4-aad5-cae3bd6ef78f&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d"
+      },
+      {
+        "id": "propensos",
+        "title": "Propensos Crédito",
+        "icon": "fas fa-user-check",
+        "url": ""
+      },
+      {
+        "id": "Seguros",
+        "title": "Seguros",
+        "icon": "far fa-address-card",
+        "url": ""
+      },
+      {
+        "id": "wsdsads-1748029767166",
+        "title": "wsdsads",
+        "icon": "fas fa-file",
+        "url": "sdsa"
+      }
+    ]
+  },
+  {
+    "groupId": "gestao",
+    "groupName": "Gestão",
+    "groupIcon": "fas fa-chart-pie",
+    "isOpenDefault": true,
+    "reports": [
+      {
+        "id": "gestao-carteiras",
+        "title": "Gestão de Carteiras",
+        "icon": "fas fa-wallet",
+        "url": "https://app.powerbi.com/reportEmbed?reportId=a1687397-22ec-4006-9dd5-e935e636ce29&autoAuth=true&ctid=b417b620-2ae9-4a83-ab6c-7fbd828bda1d"
+      },
+      {
+        "id": "custo-credito",
+        "title": "Custo Crédito",
+        "icon": "fas fa-percentage",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "groupId": "Controles e Riscos",
+    "groupName": "Controles e Riscos",
+    "groupIcon": "fas fa-users",
+    "isOpenDefault": false,
+    "reports": [
+      {
+        "id": "propensos",
+        "title": "Propensos Crédito",
+        "icon": "fas fa-user-check",
+        "url": ""
+      },
+      {
+        "id": "portifolio",
+        "title": "Portfólio Cartões",
+        "icon": "far fa-address-card",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "groupId": "sistemas",
+    "groupName": "Sistemas",
+    "groupIcon": "fas fa-cogs",
+    "isOpenDefault": false,
+    "reports": [
+      {
+        "id": "lounge-key",
+        "title": "Lounge Key",
+        "icon": "fas fa-key",
+        "url": "https://app.powerbi.com/reportEmbed?reportId=354bb4c3-09ad-4baa-a209-65e471"
       }
     ]
   }
