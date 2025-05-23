@@ -1,0 +1,99 @@
+name: Atualizar Configuração Padrão do Painel
+
+on:
+  push:
+    branches:
+      - main # Ou a sua branch principal
+    paths:
+      - '_data/nova_configuracao_padrao.json' # Gatilho quando este arquivo mudar
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Permissão para a Action fazer commit de volta no repositório
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Pode usar uma versão LTS mais recente
+
+      - name: Atualizar dashboards.html
+        run: |
+          # Ler o conteúdo do JSON de configuração
+          CONFIG_JSON=$(cat _data/nova_configuracao_padrao.json)
+
+          # Escapar caracteres especiais para sed e garantir que é uma linha única para substituição
+          # Esta é uma simplificação; JSONs complexos podem precisar de tratamento mais robusto
+          # Para JavaScript, o JSON geralmente não precisa de escape se for bem formado.
+
+          # Criar um script Node.js para fazer a substituição de forma mais segura
+          cat << EOF > update_script.js
+          const fs = require('fs');
+          const path = require('path');
+
+          const configFile = path.join('_data', 'nova_configuracao_padrao.json');
+          const dashboardFile = 'dashboards.html'; // Certifique-se que este é o caminho correto
+
+          // Ler a nova configuração JSON
+          let newConfigJsonString;
+          try {
+            newConfigJsonString = fs.readFileSync(configFile, 'utf8');
+            // Validação básica do JSON
+            JSON.parse(newConfigJsonString); // Se isso falhar, o JSON é inválido
+          } catch (error) {
+            console.error('Erro ao ler ou parsear o arquivo de configuração JSON:', error);
+            process.exit(1);
+          }
+
+          // Ler o dashboards.html
+          let dashboardContent;
+          try {
+            dashboardContent = fs.readFileSync(dashboardFile, 'utf8');
+          } catch (error) {
+            console.error('Erro ao ler o arquivo dashboards.html:', error);
+            process.exit(1);
+          }
+
+          // Encontrar e substituir a declaração de defaultReportGroupsConfig
+          // ATENÇÃO: Esta regex é crucial e pode precisar de ajustes
+          const regex = /const defaultReportGroupsConfig\s*=\s*(\[[\s\S]*?\]);/gm;
+
+          if (!regex.test(dashboardContent)) {
+            console.error('Não foi possível encontrar a declaração de defaultReportGroupsConfig no dashboards.html. Verifique a regex.');
+            process.exit(1);
+          }
+
+          const updatedDashboardContent = dashboardContent.replace(
+            regex,
+            \`const defaultReportGroupsConfig = \${newConfigJsonString};\`
+          );
+
+          // Salvar o arquivo dashboards.html modificado
+          try {
+            fs.writeFileSync(dashboardFile, updatedDashboardContent, 'utf8');
+            console.log('dashboards.html atualizado com sucesso.');
+          } catch (error) {
+            console.error('Erro ao salvar o dashboards.html modificado:', error);
+            process.exit(1);
+          }
+          EOF
+
+          node update_script.js
+
+      - name: Commit e Push das alterações
+        run: |
+          git config --global user.name 'GitHub Action Bot'
+          git config --global user.email 'action-bot@github.com'
+          git add dashboards.html # Adiciona apenas o arquivo que foi modificado
+          # Verifica se há algo para commitar
+          if ! git diff --staged --quiet; then
+            git commit -m "CHORE: Atualiza defaultReportGroupsConfig a partir de _data/nova_configuracao_padrao.json"
+            git push
+          else
+            echo "Nenhuma alteração para commitar em dashboards.html."
+          fi
